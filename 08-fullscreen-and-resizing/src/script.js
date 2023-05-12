@@ -39,6 +39,30 @@ window.addEventListener("resize", () => {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
+window.addEventListener("dblclick", () => {
+  const fullscreenElement =
+    document.fullscreenElement ||
+    document.mozFullScreenElement ||
+    document.webkitFullscreenElement;
+  if (!fullscreenElement) {
+    if (canvas.requestFullscreen) {
+      canvas.requestFullscreen();
+    } else if (canvas.webkitFullscreenElement) {
+      canvas.webkitFullscreenElement();
+    } else if (canvas.mozRequestFullScreen) {
+      canvas.mozRequestFullScreen();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    }
+  }
+});
+
 /**
  * Camera
  */
