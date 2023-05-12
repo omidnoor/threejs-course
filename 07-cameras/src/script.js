@@ -58,6 +58,13 @@ camera.position.z = 3;
 camera.lookAt(mesh.position);
 scene.add(camera);
 
+//controls
+
+const controls = new OrbitControls(camera, canvas);
+// controls.target.y = 1;
+controls.enableDamping = true;
+// controls.update();
+
 // Renderer
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
@@ -82,6 +89,8 @@ const tick = () => {
   //   camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3;
   //   camera.position.y = cursor.y * 5;
   //   camera.lookAt(mesh.position);
+
+  controls.update();
 
   //
   // Render
