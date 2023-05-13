@@ -32,7 +32,7 @@ const textureLoader = new THREE.TextureLoader(loadingManager);
 const colorTexture = textureLoader.load("/textures/minecraft.png");
 const alphaTexture = textureLoader.load("/textures/door/alpha.jpg");
 const heightTexture = textureLoader.load("/textures/door/height.jpg");
-const normalTexture = textureLoader.load("/textures/door/normal.jpg");
+const normalTexture = textureLoader.load("/textures/door/normal.jpg"); //normal better be png
 const metalnessTexture = textureLoader.load("/textures/door/metalness.jpg");
 const ambientOcclusionTexture = textureLoader.load(
   "/textures/door/ambientOcclusion.jpg",
