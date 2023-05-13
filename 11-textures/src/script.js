@@ -12,18 +12,18 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 const loadingManager = new THREE.LoadingManager();
 
-loadingManager.onStart = () => {
-  console.log("on start");
-};
-loadingManager.onLoad = () => {
-  console.log("on loaded");
-};
-loadingManager.onProgress = () => {
-  console.log("on progress");
-};
-loadingManager.onError = () => {
-  console.log("on error");
-};
+// loadingManager.onStart = () => {
+//   console.log("on start");
+// };
+// loadingManager.onLoad = () => {
+//   console.log("on loaded");
+// };
+// loadingManager.onProgress = () => {
+//   console.log("on progress");
+// };
+// loadingManager.onError = () => {
+//   console.log("on error");
+// };
 
 const textureLoader = new THREE.TextureLoader(loadingManager);
 const colorTexture = textureLoader.load("/textures/door/color.jpg");
@@ -35,6 +35,18 @@ const ambientOcclusionTexture = textureLoader.load(
   "/textures/door/ambientOcclusion.jpg",
 );
 const roughnessTexture = textureLoader.load("/textures/door/roughness.jpg");
+
+colorTexture.repeat.x = 2;
+colorTexture.repeat.y = 3;
+colorTexture.wrapS = THREE.MirroredRepeatWrapping;
+colorTexture.wrapT = THREE.RepeatWrapping;
+
+// colorTexture.offset.x = 0.5;
+// colorTexture.offset.y = 0.5;
+
+colorTexture.rotation = -Math.PI / 4;
+colorTexture.center.x = 0.5;
+colorTexture.center.y = 0.5;
 
 /**
  * Base
