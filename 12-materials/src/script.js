@@ -12,6 +12,11 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 /**
+ * Debug
+ */
+const gui = new GUI();
+
+/**
  * Textures loader
  */
 const textureLoader = new THREE.TextureLoader();
@@ -62,19 +67,44 @@ const gradientTexture = textureLoader.load("/textures/gradients/5.jpg");
 // const material = new THREE.MeshToonMaterial();
 // material.gradientMap = gradientTexture;
 
-const material = new THREE.MeshStandardMaterial();
-material.metalness = 0.45;
-material.roughness = 0.1;
+const material = new THREE.MeshStandardMaterial(); //Physically Based Rendering -> realistic results
+// material.metalness = 0.45;
+// material.roughness = 0.1;
+material.aoMap = doorAmbientOcclusionTexture;
+material.aoMapIntensity = 1;
+material.displacementMap = doorHeightTexture;
+material.displacementScale = 0.05;
+material.metalnessMap = doorMetalnessTexture;
+material.roughnessMap = doorRoughnessTexture;
+material.map = doorColorTexture;
 
-const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), material);
+gui.add(material, "metalness").min(0).max(1).step(0.001);
+gui.add(material, "roughness").min(0).max(1).step(0.001);
+gui.add(material, "aoMapIntensity").min(0).max(10).step(0.001);
+gui.add(material, "displacementScale").min(0).max(0.1).step(0.001);
+
+const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 64, 64), material);
 sphere.position.x = -1.5;
+sphere.geometry.setAttribute(
+  "uv2",
+  new THREE.BufferAttribute(sphere.geometry.attributes.uv.array, 2),
+);
 
-const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material);
+const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1, 100, 100), material);
+plane.geometry.setAttribute(
+  "uv2",
+  new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2),
+);
 
 const torus = new THREE.Mesh(
-  new THREE.TorusGeometry(0.3, 0.2, 16, 32),
+  new THREE.TorusGeometry(0.3, 0.2, 64, 128),
   material,
 );
+torus.geometry.setAttribute(
+  "uv2",
+  new THREE.BufferAttribute(torus.geometry.attributes.uv.array, 2),
+);
+
 torus.position.x = 1.5;
 
 scene.add(sphere, plane, torus);
