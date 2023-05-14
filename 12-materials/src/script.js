@@ -23,7 +23,7 @@ const doorHeightTexture = textureLoader.load("/textures/door/height.jpg");
 const doorNormalTexture = textureLoader.load("/textures/door/normal.jpg");
 const doorMetalnessTexture = textureLoader.load("/textures/door/metalness.jpg");
 const doorRoughnessTexture = textureLoader.load("/textures/door/roughness.jpg");
-const matcapTexture = textureLoader.load("/textures/matcaps/1.png");
+const matcapTexture = textureLoader.load("/textures/matcaps/8.png");
 const gradientTexture = textureLoader.load("/textures/gradients/1.png");
 /**
  * Objects
@@ -39,9 +39,12 @@ const gradientTexture = textureLoader.load("/textures/gradients/1.png");
 // material.side = THREE.FrontSide;
 // material.opacity = 0.5;
 
-const material = new THREE.MeshNormalMaterial();
+// const material = new THREE.MeshNormalMaterial();
 // material.wireframe = true;
 // material.flatShading = true;
+
+const material = new THREE.MeshMatcapMaterial();
+material.matcap = matcapTexture;
 
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), material);
 sphere.position.x = -1.5;
