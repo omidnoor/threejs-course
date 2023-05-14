@@ -29,7 +29,19 @@ const gradientTexture = textureLoader.load("/textures/gradients/1.png");
  * Objects
  *
  */
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+// const material = new THREE.MeshBasicMaterial();
+// material.color.set("red");
+// material.color = new THREE.Color("red");
+// material.wireframe = true;
+// material.map = doorColorTexture;
+// material.transparent = true;
+// material.alphaMap = doorAlphaTexture;
+// material.side = THREE.FrontSide;
+// material.opacity = 0.5;
+
+const material = new THREE.MeshNormalMaterial();
+// material.wireframe = true;
+// material.flatShading = true;
 
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), material);
 sphere.position.x = -1.5;
