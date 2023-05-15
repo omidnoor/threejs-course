@@ -92,7 +92,10 @@ for (let i = 0; i < 30; i++) {
   const radius = 3 + Math.random() * 6;
   const x = Math.sin(angle) * radius;
   const z = Math.cos(angle) * radius;
-  grave.position.set(x, 0.4, z);
+  grave.position.set(x, 0.3, z);
+  grave.rotation.y = (Math.random() - 0.5) * 0.4;
+  grave.rotation.z = (Math.random() - 0.5) * 0.4;
+  grave.castShadow = true;
   graves.add(grave);
 }
 
