@@ -33,6 +33,40 @@ const doorNormalTexture = textureLoader.load("textures/door/normal.jpg");
 const doorMetalnessTexture = textureLoader.load("textures/door/metalness.jpg");
 const doorRoughnessTexture = textureLoader.load("textures/door/roughness.jpg");
 
+const bricksColorTexture = textureLoader.load("textures/bricks/color.jpg");
+const bricksAmbientOcclusionTexture = textureLoader.load(
+  "textures/bricks/ambientOcclusion.jpg",
+);
+const bricksNormalTexture = textureLoader.load("textures/bricks/normal.jpg");
+const bricksRoughnessTexture = textureLoader.load(
+  "textures/bricks/roughness.jpg",
+);
+
+const grassColorTexture = textureLoader.load("textures/grass/color.jpg");
+const grassAmbientOcclusionTexture = textureLoader.load(
+  "textures/grass/ambientOcclusion.jpg",
+);
+const grassNormalTexture = textureLoader.load("textures/grass/normal.jpg");
+const grassRoughnessTexture = textureLoader.load(
+  "textures/grass/roughness.jpg",
+);
+
+grassColorTexture.repeat.set(8, 8);
+grassAmbientOcclusionTexture.repeat.set(8, 8);
+grassNormalTexture.repeat.set(8, 8);
+grassRoughnessTexture.repeat.set(8, 8);
+
+// we must wrapS and wrapT in THREE.RepeatWrapping for repeat to work
+grassColorTexture.wrapS = THREE.RepeatWrapping;
+grassAmbientOcclusionTexture.wrapS = THREE.RepeatWrapping;
+grassNormalTexture.wrapS = THREE.RepeatWrapping;
+grassRoughnessTexture.wrapS = THREE.RepeatWrapping;
+
+grassColorTexture.wrapT = THREE.RepeatWrapping;
+grassAmbientOcclusionTexture.wrapT = THREE.RepeatWrapping;
+grassNormalTexture.wrapT = THREE.RepeatWrapping;
+grassRoughnessTexture.wrapT = THREE.RepeatWrapping;
+
 /**
  * House
  */
@@ -43,8 +77,19 @@ scene.add(house);
 // Walls
 const walls = new THREE.Mesh(
   new THREE.BoxGeometry(4, 2.5, 4),
-  new THREE.MeshStandardMaterial({ color: "#ac8e82" }),
+  new THREE.MeshStandardMaterial({
+    map: bricksColorTexture,
+    transparent: true, // we must set this to true to alphaMap to work
+    aoMap: bricksAmbientOcclusionTexture,
+    roughnessMap: bricksRoughnessTexture,
+    displacementScale: 0.1,
+    normalMap: bricksNormalTexture,
+  }),
 );
+walls.geometry.setAttribute(
+  "uv2",
+  new THREE.Float32BufferAttribute(walls.geometry.attributes.uv.array, 2),
+); // we must define the uv2 attribute for aoMap to work
 walls.position.y = 2.5 / 2;
 house.add(walls);
 
@@ -59,7 +104,7 @@ house.add(roof);
 
 // Door
 const door = new THREE.Mesh(
-  new THREE.PlaneGeometry(2, 2),
+  new THREE.PlaneGeometry(2.2, 2.1, 100, 100),
   new THREE.MeshStandardMaterial({
     map: doorColorTexture,
     transparent: true, // we must set this to true to alphaMap to work
@@ -67,6 +112,9 @@ const door = new THREE.Mesh(
     aoMap: doorAmbientOcclusionTexture,
     metalnessMap: doorMetalnessTexture,
     roughnessMap: doorRoughnessTexture,
+    displacementMap: doorHeightTexture, // we must deifne more vertices for displacementMap to work
+    displacementScale: 0.1,
+    normalMap: doorNormalTexture,
   }),
 );
 door.geometry.setAttribute(
@@ -139,8 +187,18 @@ graves.add(grave1);
 // Floor
 const floor = new THREE.Mesh(
   new THREE.PlaneGeometry(20, 20),
-  new THREE.MeshStandardMaterial({ color: "#a9c388" }),
+  new THREE.MeshStandardMaterial({
+    map: grassColorTexture,
+    transparent: true, // we must set this to true to alphaMap to work
+    aoMap: grassAmbientOcclusionTexture,
+    roughnessMap: grassRoughnessTexture,
+    normalMap: grassNormalTexture,
+  }),
 );
+floor.geometry.setAttribute(
+  "uv2",
+  new THREE.Float32BufferAttribute(floor.geometry.attributes.uv.array, 2),
+); // we must define the uv2 attribute for aoMap to work
 floor.rotation.x = -Math.PI * 0.5;
 floor.position.y = 0;
 scene.add(floor);
