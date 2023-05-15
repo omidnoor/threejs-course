@@ -230,6 +230,16 @@ doorLight.position.set(0, 2.2, 2.7);
 house.add(doorLight);
 
 /**
+ * Ghost
+ */
+const ghost1 = new THREE.PointLight("#ff00ff", 2, 5);
+scene.add(ghost1);
+const ghost2 = new THREE.PointLight("#00ffff", 2, 5);
+scene.add(ghost2);
+const ghost3 = new THREE.PointLight("#ffff00", 2, 5);
+scene.add(ghost3);
+
+/**
  * Sizes
  */
 const sizes = {
@@ -289,6 +299,26 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+
+  // Update Ghosts
+  const ghost1Angle = elapsedTime * 0.5;
+  ghost1.position.x =
+    Math.sin(ghost1Angle) * 4 * (Math.sin(ghost1Angle) * 0.2 + 1);
+  ghost1.position.z =
+    Math.cos(ghost1Angle) * 4 * (Math.cos(ghost1Angle) * 0.2 + 1);
+  ghost1.position.y = Math.sin(ghost1Angle * 3) * (Math.random() * 0.2 + 2);
+
+  const ghost2Angle = elapsedTime * 0.2;
+  ghost2.position.x =
+    Math.sin(ghost2Angle) * 4 * (Math.cos(ghost2Angle) * 2 + 2);
+  ghost2.position.z =
+    Math.cos(ghost2Angle) * 4 * (Math.cos(ghost2Angle) * 2 + 1);
+  ghost2.position.y = Math.sin(ghost2Angle * 3) * (Math.random() * 0.1 + 1);
+
+  const ghost3Angle = elapsedTime * 0.5;
+  ghost3.position.x = Math.sin(ghost3Angle) * 4 * (Math.random() * 0.3 + 1);
+  ghost3.position.z = Math.cos(ghost3Angle) * 4 * (Math.random() * 0.1 + 2);
+  ghost3.position.y = Math.sin(ghost3Angle * 3) * (Math.random() * 0.1 + 1);
 
   // Update controls
   controls.update();
