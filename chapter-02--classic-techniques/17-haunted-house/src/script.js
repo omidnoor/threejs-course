@@ -14,17 +14,31 @@ const canvas = document.querySelector("canvas.webgl");
 // Scene
 const scene = new THREE.Scene();
 
+// Fog
+const fog = new THREE.Fog("#262837", 1, 15);
+scene.fog = fog;
+
 /**
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
+
+const doorColorTexture = textureLoader.load("textures/door/color.jpg");
+const doorAlphaTexture = textureLoader.load("textures/door/alpha.jpg");
+const doorAmbientOcclusionTexture = textureLoader.load(
+  "textures/door/ambientOcclusion.jpg",
+);
+const doorHeightTexture = textureLoader.load("textures/door/height.jpg");
+const doorNormalTexture = textureLoader.load("textures/door/normal.jpg");
+const doorMetalnessTexture = textureLoader.load("textures/door/metalness.jpg");
+const doorRoughnessTexture = textureLoader.load("textures/door/roughness.jpg");
 
 /**
  * House
  */
 const house = new THREE.Group();
 scene.add(house);
-house.castShadow = true;
+// house.castShadow = true;
 
 // Walls
 const walls = new THREE.Mesh(
@@ -46,11 +60,22 @@ house.add(roof);
 // Door
 const door = new THREE.Mesh(
   new THREE.PlaneGeometry(2, 2),
-  new THREE.MeshStandardMaterial({ color: "#aa7b7b" }),
+  new THREE.MeshStandardMaterial({
+    map: doorColorTexture,
+    transparent: true, // we must set this to true to alphaMap to work
+    alphaMap: doorAlphaTexture,
+    aoMap: doorAmbientOcclusionTexture,
+    metalnessMap: doorMetalnessTexture,
+    roughnessMap: doorRoughnessTexture,
+  }),
 );
+door.geometry.setAttribute(
+  "uv2",
+  new THREE.Float32BufferAttribute(door.geometry.attributes.uv.array, 2),
+); // we must define the uv2 attribute for aoMap to work
 door.position.z = 2 + 0.01;
 door.position.y = 1;
-door.rotation.z = Math.PI * 0.5;
+// door.rotation.z = Math.PI * 0.5;
 house.add(door);
 
 // Bushes
@@ -62,26 +87,26 @@ const bushMaterial = new THREE.MeshStandardMaterial({
 const bush1 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush1.scale.set(0.5, 0.5, 0.5);
 bush1.position.set(0.8, 0.2, 2.2);
-bush1.castShadow = true;
-bush1.receiveShadow = true;
+// bush1.castShadow = true;
+// bush1.receiveShadow = true;
 
 const bush2 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush2.scale.set(0.25, 0.25, 0.25);
 bush2.position.set(1.4, 0.1, 2.1);
-bush2.castShadow = true;
-bush2.receiveShadow = true;
+// bush2.castShadow = true;
+// bush2.receiveShadow = true;
 
 const bush3 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush3.scale.set(0.4, 0.4, 0.4);
 bush3.position.set(-0.8, 0.1, 2.2);
-bush3.castShadow = true;
-bush3.receiveShadow = true;
+// bush3.castShadow = true;
+// bush3.receiveShadow = true;
 
 const bush4 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush4.scale.set(0.15, 0.15, 0.15);
 bush4.position.set(-1, 0.05, 2.6);
-bush4.castShadow = true;
-bush4.receiveShadow = true;
+// bush4.castShadow = true;
+// bush4.receiveShadow = true;
 
 house.add(bush1, bush2, bush3, bush4);
 
@@ -103,7 +128,7 @@ for (let i = 0; i < 30; i++) {
   grave.position.set(x, 0.3, z);
   grave.rotation.y = (Math.random() - 0.5) * 0.4;
   grave.rotation.z = (Math.random() - 0.5) * 0.4;
-  grave.castShadow = true;
+  //   grave.castShadow = true;
   graves.add(grave);
 }
 
@@ -119,7 +144,7 @@ const floor = new THREE.Mesh(
 floor.rotation.x = -Math.PI * 0.5;
 floor.position.y = 0;
 scene.add(floor);
-floor.receiveShadow = true;
+// floor.receiveShadow = true;
 
 /**
  * Lights
@@ -138,12 +163,12 @@ gui.add(moonLight.position, "x").min(-5).max(5).step(0.001);
 gui.add(moonLight.position, "y").min(-5).max(5).step(0.001);
 gui.add(moonLight.position, "z").min(-5).max(5).step(0.001);
 scene.add(moonLight);
-moonLight.castShadow = true;
+// moonLight.castShadow = true;
 
 // Door Light
 const doorLight = new THREE.PointLight("#ff7d46", 1, 7);
 doorLight.position.set(0, 2.2, 2.7);
-moonLight.castShadow = true;
+// moonLight.castShadow = true;
 house.add(doorLight);
 
 /**
@@ -195,8 +220,9 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor("#262837");
 
-renderer.shadowMap.enabled = true;
+// renderer.shadowMap.enabled = true;
 
 /**
  * Animate
