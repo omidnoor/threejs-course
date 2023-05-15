@@ -31,7 +31,7 @@ const positions = new Float32Array(count * 3);
 const colors = new Float32Array(count * 3);
 
 for (let i = 0; i < count * 3; i++) {
-  positions[i] = (Math.random() - 0.5) * 2;
+  positions[i] = (Math.random() - 0.5) * 4;
   colors[i] = Math.random();
 }
 
@@ -119,7 +119,18 @@ const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
   // Update Particles
-  particles.rotation.y = elapsedTime * 0.1;
+  //   particles.rotation.y = elapsedTime * 0.1;
+
+  // BAD IADEA
+  //   for (let i = 0; i < count; i++) {
+  //     const i3 = i * 3;
+  //     const x = particlesGeometry.attributes.position.array[i3];
+  //     particlesGeometry.attributes.position.array[i3 + 1] = Math.sin(
+  //       elapsedTime * x,
+  //     );
+  //   }
+
+  particlesGeometry.attributes.position.needsUpdate = true;
 
   // Update controls
   controls.update();
