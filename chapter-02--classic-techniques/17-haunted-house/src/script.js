@@ -55,25 +55,33 @@ house.add(door);
 
 // Bushes
 const bushGeometry = new THREE.SphereGeometry(1, 16, 16);
-const bushMaterial = new THREE.MeshBasicMaterial({
+const bushMaterial = new THREE.MeshStandardMaterial({
   color: "#89c854",
 });
 
 const bush1 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush1.scale.set(0.5, 0.5, 0.5);
 bush1.position.set(0.8, 0.2, 2.2);
+bush1.castShadow = true;
+bush1.receiveShadow = true;
 
 const bush2 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush2.scale.set(0.25, 0.25, 0.25);
 bush2.position.set(1.4, 0.1, 2.1);
+bush2.castShadow = true;
+bush2.receiveShadow = true;
 
 const bush3 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush3.scale.set(0.4, 0.4, 0.4);
 bush3.position.set(-0.8, 0.1, 2.2);
+bush3.castShadow = true;
+bush3.receiveShadow = true;
 
 const bush4 = new THREE.Mesh(bushGeometry, bushMaterial);
 bush4.scale.set(0.15, 0.15, 0.15);
 bush4.position.set(-1, 0.05, 2.6);
+bush4.castShadow = true;
+bush4.receiveShadow = true;
 
 house.add(bush1, bush2, bush3, bush4);
 
@@ -117,7 +125,7 @@ floor.receiveShadow = true;
  * Lights
  */
 // Ambient light
-const ambientLight = new THREE.AmbientLight("#ffffff", 0.5);
+const ambientLight = new THREE.AmbientLight("#b9d5ff", 0.12);
 gui.add(ambientLight, "intensity").min(0).max(1).step(0.001);
 scene.add(ambientLight);
 ambientLight.castShadow = true;
@@ -131,6 +139,12 @@ gui.add(moonLight.position, "y").min(-5).max(5).step(0.001);
 gui.add(moonLight.position, "z").min(-5).max(5).step(0.001);
 scene.add(moonLight);
 moonLight.castShadow = true;
+
+// Door Light
+const doorLight = new THREE.PointLight("#ff7d46", 1, 7);
+doorLight.position.set(0, 2.2, 2.7);
+moonLight.castShadow = true;
+house.add(doorLight);
 
 /**
  * Sizes
