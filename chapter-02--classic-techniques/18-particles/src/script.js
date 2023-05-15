@@ -28,9 +28,11 @@ const particlesGeometry = new THREE.BufferGeometry();
 const count = 100000;
 
 const positions = new Float32Array(count * 3);
+const colors = new Float32Array(count * 3);
 
 for (let i = 0; i < count * 3; i++) {
   positions[i] = (Math.random() - 0.5) * 2;
+  colors[i] = Math.random();
 }
 
 particlesGeometry.setAttribute(
@@ -38,11 +40,13 @@ particlesGeometry.setAttribute(
   new THREE.BufferAttribute(positions, 3),
 );
 
+particlesGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+
 // Material
 const particlesMaterial = new THREE.PointsMaterial({
   size: 0.02,
   sizeAttenuation: true,
-  color: "#ffffff",
+  //   color: 0xffffff,
 });
 particlesMaterial.transparent = true;
 particlesMaterial.alphaMap = particleTexture;
@@ -51,6 +55,8 @@ particlesMaterial.alphaMap = particleTexture;
 // particlesMaterial.alphaTest = 0.01;
 // particlesMaterial.depthTest = false; // might create bugs
 particlesMaterial.depthWrite = false; // better solution than depthTest
+particlesMaterial.blending = THREE.AdditiveBlending; // impact performance
+particlesMaterial.vertexColors = true; // To use color BufferAttribute
 
 // Points
 const particles = new THREE.Points(particlesGeometry, particlesMaterial);
@@ -111,6 +117,9 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+
+  // Update Particles
+  particles.rotation.y = elapsedTime * 0.1;
 
   // Update controls
   controls.update();
