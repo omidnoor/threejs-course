@@ -18,18 +18,19 @@ const scene = new THREE.Scene();
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
+const particleTexture = textureLoader.load("/textures/particles/2.png");
 
 /**
  * Particles
  */
 // Geometry
 const particlesGeometry = new THREE.BufferGeometry();
-const count = 10000;
+const count = 100000;
 
 const positions = new Float32Array(count * 3);
 
 for (let i = 0; i < count * 3; i++) {
-  positions[i] = (Math.random() - 0.5) * 20;
+  positions[i] = (Math.random() - 0.5) * 2;
 }
 
 particlesGeometry.setAttribute(
@@ -41,7 +42,15 @@ particlesGeometry.setAttribute(
 const particlesMaterial = new THREE.PointsMaterial({
   size: 0.02,
   sizeAttenuation: true,
+  color: "#ffffff",
 });
+particlesMaterial.transparent = true;
+particlesMaterial.alphaMap = particleTexture;
+
+// Solutions to remove surrounding particles black area
+// particlesMaterial.alphaTest = 0.01;
+// particlesMaterial.depthTest = false; // might create bugs
+particlesMaterial.depthWrite = false; // better solution than depthTest
 
 // Points
 const particles = new THREE.Points(particlesGeometry, particlesMaterial);
