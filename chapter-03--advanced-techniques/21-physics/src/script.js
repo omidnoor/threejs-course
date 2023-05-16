@@ -11,7 +11,7 @@ const debugObject = {};
 
 debugObject.createSphere = () => {
   createSphere(
-    Math.random() * 0.5,
+    Math.random() * 0.5 + 0.15,
     {
       x: (Math.random() - 0.5) * 3,
       y: 3,
@@ -49,6 +49,23 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 /**
+ * Sounds
+ */
+const hitSound = new Audio("/sounds/hit.mp3");
+
+const playHitSound = (collision) => {
+  const impactStrength = collision.contact.getImpactVelocityAlongNormal();
+
+  if (impactStrength > 1.5) {
+    const random = Math.random();
+    console.log(impactStrength * random);
+    hitSound.volume = impactStrength * random > 1 ? 1 : impactStrength * random;
+    hitSound.currentTime = 0;
+    hitSound.play();
+  }
+};
+
+/**
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
@@ -70,6 +87,7 @@ const environmentMapTexture = cubeTextureLoader.load([
 // World
 const world = new CANNON.World();
 world.broadphase = new CANNON.SAPBroadphase(world);
+world.allowSleep = true; // helps for performance
 world.gravity.set(0, -10, 0);
 
 // Materials
@@ -80,7 +98,7 @@ const defaultContactMaterial = new CANNON.ContactMaterial(
   defaultMaterial,
   {
     friction: 0.1,
-    restitution: 0.9,
+    restitution: 0.5,
   },
 );
 world.addContactMaterial(defaultContactMaterial);
@@ -217,6 +235,7 @@ const createSphere = (radius, position, color) => {
     material: defaultMaterial,
   });
   body.position.copy(position);
+  body.addEventListener("collide", playHitSound);
   world.addBody(body);
 
   // Save in objects to update
@@ -253,6 +272,7 @@ const createBox = (width, height, depth, position, color) => {
     material: defaultMaterial,
   });
   body.position.copy(position);
+  body.addEventListener("collide", playHitSound);
   world.addBody(body);
 
   // Save in objects to update
