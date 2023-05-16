@@ -10,21 +10,31 @@ const gui = new dat.GUI();
 const debugObject = {};
 
 debugObject.createSphere = () => {
-  createSphere(Math.random() * 0.5, {
-    x: (Math.random() - 0.5) * 3,
-    y: 3,
-    z: (Math.random() - 0.5) * 3,
-  });
+  createSphere(
+    Math.random() * 0.5,
+    {
+      x: (Math.random() - 0.5) * 3,
+      y: 3,
+      z: (Math.random() - 0.5) * 3,
+    },
+    new THREE.Color(Math.random(), Math.random(), Math.random()),
+  );
 };
 
 gui.add(debugObject, "createSphere");
 
 debugObject.createBox = () => {
-  createBox(Math.random(), Math.random(), Math.random(), {
-    x: (Math.random() - 0.5) * 3,
-    y: 3,
-    z: (Math.random() - 0.5) * 3,
-  });
+  createBox(
+    Math.random(),
+    Math.random(),
+    Math.random(),
+    {
+      x: (Math.random() - 0.5) * 3,
+      y: 3,
+      z: (Math.random() - 0.5) * 3,
+    },
+    new THREE.Color(Math.random(), Math.random(), Math.random()),
+  );
 };
 
 gui.add(debugObject, "createBox");
@@ -184,15 +194,15 @@ const objectToUpdate = [];
 
 // Create Spheres
 const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
-const sphereMaterial = new THREE.MeshStandardMaterial({
-  metalness: 0.3,
-  roughness: 0.4,
-  envMap: environmentMapTexture,
-  color: 0xffff00,
-});
+const createSphere = (radius, position, color) => {
+  // Create a new material for each sphere
+  const sphereMaterial = new THREE.MeshStandardMaterial({
+    metalness: 0.3,
+    roughness: 0.4,
+    envMap: environmentMapTexture,
+  });
 
-const createSphere = (radius, position) => {
-  // Three.js Mesh
+  sphereMaterial.color = color;
   const mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
   mesh.scale.set(radius, radius, radius);
   mesh.castShadow = true;
@@ -218,14 +228,15 @@ const createSphere = (radius, position) => {
 
 // Create Boxes
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-const boxMaterial = new THREE.MeshStandardMaterial({
-  metalness: 0.3,
-  roughness: 0.4,
-  envMap: environmentMapTexture,
-});
 
-const createBox = (width, height, depth, position) => {
+const createBox = (width, height, depth, position, color) => {
   // Three.js Mesh
+  const boxMaterial = new THREE.MeshStandardMaterial({
+    metalness: 0.3,
+    roughness: 0.4,
+    envMap: environmentMapTexture,
+  });
+  boxMaterial.color = color;
   const mesh = new THREE.Mesh(boxGeometry, boxMaterial);
   mesh.scale.set(width, height, depth);
   mesh.castShadow = true;
