@@ -61,7 +61,7 @@ const sphereBody = new CANNON.Body({
   position: new CANNON.Vec3(0, 3, 0),
   shape: sphereShape,
 });
-sphereBody.applyLocalForce(new CANNON.Vec3(100, 0, 0), new CANNON.Vec3());
+// sphereBody.applyLocalForce(new CANNON.Vec3(100, 0, 0), new CANNON.Vec3());
 world.addBody(sphereBody);
 
 // Floor
@@ -159,6 +159,8 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 /**
  * Utils
  */
+const objectToUpdate = [];
+
 const createSphere = (radius, position) => {
   // Three.js Mesh
   const mesh = new THREE.Mesh(
@@ -182,6 +184,12 @@ const createSphere = (radius, position) => {
   });
   body.position.copy(position);
   world.addBody(body);
+
+  // Save in objects to update
+  objectToUpdate.push({
+    mesh,
+    body,
+  });
 };
 
 createSphere(0.5, { x: 0, y: 3, z: 0 });
@@ -201,6 +209,10 @@ const tick = () => {
 
   // Update Physics World
   world.step(1 / 60, deltaTime, 3);
+
+  for (const object of objectToUpdate) {
+    object.mesh.position.copy(object.body.position);
+  }
 
   // Update controls
   controls.update();
