@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
-import CANNON from "cannon";
+import * as CANNON from "cannon-es";
 
 /**
  * Debug
@@ -43,7 +43,7 @@ debugObject.reset = () => {
   for (const object of objectToUpdate) {
     // Remove Body
     object.body.removeEventListener("collide", playHitSound);
-    world.remove(object.body);
+    world.removeBody(object.body);
 
     // Remove Mesh
     scene.remove(object.mesh);
