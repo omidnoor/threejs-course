@@ -18,13 +18,15 @@ const scene = new THREE.Scene();
  * Galaxy
  */
 const parameters = {};
-parameters.count = 1000;
-parameters.size = 0.02;
+parameters.count = 100000;
+parameters.size = 0.01;
 parameters.radius = 5;
 parameters.branches = 3;
 parameters.spin = 1;
-parameters.randomness = 0.2;
+parameters.randomness = 3;
 parameters.randomnessPower = 3;
+parameters.insideColor = "#ff6030";
+parameters.outsideColor = "#1b3984";
 
 let geometry = null;
 let material = null;
@@ -43,8 +45,15 @@ const generateGalaxy = () => {
   let z = 0;
   geometry = new THREE.BufferGeometry();
   const positions = new Float32Array(parameters.count * 3);
+  const colors = new Float32Array(parameters.count * 3);
+
+  const insideColor = new THREE.Color(parameters.insideColor);
+  const outsdeColor = new THREE.Color(parameters.outsideColor);
+
   for (let i = 0; i < parameters.count; i++) {
     const i3 = i * 3;
+
+    // Position
     const radius = Math.random() * parameters.radius;
     const spinAngle = radius * parameters.spin;
     const branchAngle =
@@ -66,12 +75,21 @@ const generateGalaxy = () => {
     positions[i3] =
       Math.cos(branchAngle + spinAngle) * radius +
       randomX * (radius / parameters.radius) ** 2;
-    positions[i3 + 1] = Math.sin(randomY) ** 11;
+    positions[i3 + 1] = Math.sin(randomY + 1 / spinAngle) ** 19;
     positions[i3 + 2] =
       Math.sin(branchAngle + spinAngle) * radius +
       randomZ * (radius / parameters.radius) ** 2;
+
+    // Color
+    const mixedColor = insideColor.clone();
+    mixedColor.lerp(outsdeColor, radius / parameters.radius);
+
+    colors[i3] = mixedColor.r;
+    colors[i3 + 1] = mixedColor.g;
+    colors[i3 + 2] = mixedColor.b;
   }
   geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
   /**
    *  Material
@@ -81,6 +99,7 @@ const generateGalaxy = () => {
     sizeAttenuation: true,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
+    vertexColors: true,
   });
 
   /**
@@ -129,7 +148,7 @@ gui
 gui
   .add(parameters, "randomness")
   .min(1)
-  .max(2)
+  .max(10)
   .step(0.001)
   .onFinishChange(generateGalaxy);
 
@@ -139,6 +158,10 @@ gui
   .max(10)
   .step(0.001)
   .onFinishChange(generateGalaxy);
+
+gui.addColor(parameters, "insideColor").onFinishChange(generateGalaxy);
+
+gui.addColor(parameters, "outsideColor").onFinishChange(generateGalaxy);
 
 /**
  * Sizes
