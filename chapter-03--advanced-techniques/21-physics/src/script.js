@@ -59,6 +59,7 @@ const environmentMapTexture = cubeTextureLoader.load([
 
 // World
 const world = new CANNON.World();
+world.broadphase = new CANNON.SAPBroadphase(world);
 world.gravity.set(0, -10, 0);
 
 // Materials
@@ -187,6 +188,7 @@ const sphereMaterial = new THREE.MeshStandardMaterial({
   metalness: 0.3,
   roughness: 0.4,
   envMap: environmentMapTexture,
+  color: 0xffff00,
 });
 
 const createSphere = (radius, position) => {
