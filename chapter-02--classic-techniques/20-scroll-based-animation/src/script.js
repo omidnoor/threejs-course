@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import * as dat from "lil-gui";
+import gsap from "gsap";
 
 /**
  * Debug
@@ -12,6 +13,7 @@ const parameters = {
 
 gui.addColor(parameters, "materialColor").onChange(() => {
   material.color.set(parameters.materialColor);
+  particleMaterial.color.set(parameters.materialColor);
 });
 
 /**
@@ -64,13 +66,15 @@ const sectionMeshes = [mesh1, mesh2, mesh3];
 /**
  * Particles
  */
-const particlesCount = 200;
+const particlesCount = 2000;
 const positions = new Float32Array(particlesCount * 3);
 
 for (let i = 0; i < particlesCount; i++) {
-  positions[i * 3] = Math.random() * 2 - 1;
-  positions[i * 3 + 1] = Math.random() * 2 - 1;
-  positions[i * 3 + 2] = Math.random() * 2 - 1;
+  positions[i * 3] = (Math.random() - 0.5) * 10;
+  positions[i * 3 + 1] =
+    objectsDistance * 0.5 -
+    Math.random() * objectsDistance * sectionMeshes.length;
+  positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
 }
 
 const particlesGeometry = new THREE.BufferGeometry();
@@ -152,9 +156,21 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
  * Scroll
  */
 let scrollY = window.scrollY;
+let currentSection = 0;
 
 window.addEventListener("scroll", () => {
   scrollY = window.scrollY;
+  const newSection = Math.floor(scrollY / sizes.height);
+  if (newSection !== currentSection) {
+    currentSection = newSection;
+    gsap.to(sectionMeshes[currentSection].rotation, {
+      duration: 1.5,
+      ease: "power2.inOut",
+      x: "+=6",
+      y: "+=3",
+      z: "+=1.5",
+    });
+  }
 });
 
 /**
@@ -193,8 +209,8 @@ const tick = () => {
 
   // Animate Meshes
   for (const mesh of sectionMeshes) {
-    mesh.rotation.x = 0.1 * elapsedTime;
-    mesh.rotation.y = 0.15 * elapsedTime;
+    mesh.rotation.x += 0.1 * deltaTime;
+    mesh.rotation.y += 0.15 * deltaTime;
   }
 
   // Render
