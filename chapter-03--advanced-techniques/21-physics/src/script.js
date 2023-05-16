@@ -39,6 +39,20 @@ debugObject.createBox = () => {
 
 gui.add(debugObject, "createBox");
 
+debugObject.reset = () => {
+  for (const object of objectToUpdate) {
+    // Remove Body
+    object.body.removeEventListener("collide", playHitSound);
+    world.remove(object.body);
+
+    // Remove Mesh
+    scene.remove(object.mesh);
+  }
+  objectToUpdate = [];
+};
+
+gui.add(debugObject, "reset");
+
 /**
  * Base
  */
@@ -58,7 +72,6 @@ const playHitSound = (collision) => {
 
   if (impactStrength > 1.5) {
     const random = Math.random();
-    console.log(impactStrength * random);
     hitSound.volume = impactStrength * random > 1 ? 1 : impactStrength * random;
     hitSound.currentTime = 0;
     hitSound.play();
@@ -208,7 +221,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 /**
  * Utils
  */
-const objectToUpdate = [];
+let objectToUpdate = [];
 
 // Create Spheres
 const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
