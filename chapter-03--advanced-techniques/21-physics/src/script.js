@@ -48,7 +48,7 @@ debugObject.reset = () => {
     // Remove Mesh
     scene.remove(object.mesh);
   }
-  objectToUpdate = [];
+  objectToUpdate.splice(0, objectToUpdate.length);
 };
 
 gui.add(debugObject, "reset");
@@ -221,7 +221,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 /**
  * Utils
  */
-let objectToUpdate = [];
+const objectToUpdate = [];
 
 // Create Spheres
 const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
