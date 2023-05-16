@@ -19,6 +19,16 @@ debugObject.createSphere = () => {
 
 gui.add(debugObject, "createSphere");
 
+debugObject.createBox = () => {
+  createBox(Math.random(), Math.random(), Math.random(), {
+    x: (Math.random() - 0.5) * 3,
+    y: 3,
+    z: (Math.random() - 0.5) * 3,
+  });
+};
+
+gui.add(debugObject, "createBox");
+
 /**
  * Base
  */
@@ -93,7 +103,6 @@ const floor = new THREE.Mesh(
     metalness: 0.3,
     roughness: 0.4,
     envMap: environmentMapTexture,
-    envMapIntensity: 0.5,
   }),
 );
 floor.receiveShadow = true;
@@ -172,16 +181,18 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
  */
 const objectToUpdate = [];
 
+// Create Spheres
+const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+const sphereMaterial = new THREE.MeshStandardMaterial({
+  metalness: 0.3,
+  roughness: 0.4,
+  envMap: environmentMapTexture,
+});
+
 const createSphere = (radius, position) => {
   // Three.js Mesh
-  const mesh = new THREE.Mesh(
-    new THREE.SphereGeometry(radius, 32, 32),
-    new THREE.MeshStandardMaterial({
-      metalness: 0.3,
-      roughness: 0.4,
-      envMap: environmentMapTexture,
-    }),
-  );
+  const mesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+  mesh.scale.set(radius, radius, radius);
   mesh.castShadow = true;
   mesh.position.copy(position);
   scene.add(mesh);
@@ -203,8 +214,40 @@ const createSphere = (radius, position) => {
   });
 };
 
-// createSphere(0.5, { x: 0, y: 3, z: 0 });
-// createSphere(0.5, { x: -1, y: 2, z: 0 });
+// Create Boxes
+const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+const boxMaterial = new THREE.MeshStandardMaterial({
+  metalness: 0.3,
+  roughness: 0.4,
+  envMap: environmentMapTexture,
+});
+
+const createBox = (width, height, depth, position) => {
+  // Three.js Mesh
+  const mesh = new THREE.Mesh(boxGeometry, boxMaterial);
+  mesh.scale.set(width, height, depth);
+  mesh.castShadow = true;
+  mesh.position.copy(position);
+  scene.add(mesh);
+
+  // Cannon.js Body
+  const shape = new CANNON.Box(
+    new CANNON.Vec3(width * 0.5, height * 0.5, depth * 0.5),
+  );
+  const body = new CANNON.Body({
+    mass: 1,
+    shape: shape,
+    material: defaultMaterial,
+  });
+  body.position.copy(position);
+  world.addBody(body);
+
+  // Save in objects to update
+  objectToUpdate.push({
+    mesh,
+    body,
+  });
+};
 
 /**
  * Animate
