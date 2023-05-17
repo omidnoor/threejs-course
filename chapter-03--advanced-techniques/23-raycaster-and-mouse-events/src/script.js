@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 /**
  * Base
@@ -87,7 +88,16 @@ window.addEventListener("mousemove", (event) => {
 window.addEventListener("click", (event) => {
   //   console.log(event.clientX, event.clientY);
   if (currentIntersect !== null) {
-    console.log("sphere was clicked");
+    // console.log("sphere was clicked");
+    if (currentIntersect.object === object1) {
+      //   console.log("cklicked on sphere 1");
+    }
+    if (currentIntersect.object === object2) {
+      //   console.log("cklicked on sphere 2");
+    }
+    if (currentIntersect.object === object3) {
+      //   console.log("cklicked on sphere 3");
+    }
   }
 });
 
@@ -116,6 +126,29 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+/**
+ * Model
+ */
+const gltfLoader = new GLTFLoader();
+
+let model = null;
+
+gltfLoader.load("./models/Duck/glTF-Binary/Duck.glb", (gltf) => {
+  model = gltf.scene;
+  model.position.y = -1.2;
+  scene.add(model);
+});
+
+/**
+ * Lights
+ */
+const ambientLight = new THREE.AmbientLight("#ffffff", 0.5);
+scene.add(ambientLight);
+
+const directionalLight = new THREE.DirectionalLight("#ffffff", 0.5);
+directionalLight.position.set(1, 2, 3);
+scene.add(directionalLight);
 
 /**
  * Animate
@@ -162,6 +195,16 @@ const tick = () => {
       //   console.log("mouse exited");
     }
     currentIntersect = null;
+  }
+
+  // Test Intersects with Model
+  if (model !== null) {
+    const modelIntersects = raycaster.intersectObject(model, true);
+    if (modelIntersects.length > 0) {
+      model.scale.set(1.5, 1.5, 1.5);
+    } else {
+      model.scale.set(1, 1, 1);
+    }
   }
 
   // Update controls
