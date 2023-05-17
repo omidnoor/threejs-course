@@ -84,6 +84,13 @@ window.addEventListener("mousemove", (event) => {
   mouse.y = -(event.clientY / sizes.height) * 2 + 1;
 });
 
+window.addEventListener("click", (event) => {
+  //   console.log(event.clientX, event.clientY);
+  if (currentIntersect !== null) {
+    console.log("sphere was clicked");
+  }
+});
+
 /**
  * Camera
  */
@@ -146,13 +153,13 @@ const tick = () => {
 
   if (intersects.length) {
     if (currentIntersect === null) {
-      console.log("mouse entered");
+      //   console.log("mouse entered");
       currentIntersect = intersects[0];
-      console.log(currentIntersect);
+      //   console.log(currentIntersect);
     }
   } else {
     if (currentIntersect !== null) {
-      console.log("mouse exited");
+      //   console.log("mouse exited");
     }
     currentIntersect = null;
   }
