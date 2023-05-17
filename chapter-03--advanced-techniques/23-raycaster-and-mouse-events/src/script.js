@@ -115,6 +115,8 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
  */
 const clock = new THREE.Clock();
 
+let currentIntersect = null;
+
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
@@ -140,6 +142,19 @@ const tick = () => {
 
   for (const intersect of intersects) {
     intersect.object.material.color.set("#0000ff");
+  }
+
+  if (intersects.length) {
+    if (currentIntersect === null) {
+      console.log("mouse entered");
+      currentIntersect = intersects[0];
+      console.log(currentIntersect);
+    }
+  } else {
+    if (currentIntersect !== null) {
+      console.log("mouse exited");
+    }
+    currentIntersect = null;
   }
 
   // Update controls
