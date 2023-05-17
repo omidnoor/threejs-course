@@ -25,19 +25,19 @@ const gltfLoader = new GLTFLoader();
 dracoLoader.setDecoderPath("/draco/");
 gltfLoader.setDRACOLoader(dracoLoader);
 
-gltfLoader.load(
-  // "/models/Duck/glTF/Duck.gltf",
-  //   "/models/Duck/glTF-Binary/Duck.glb",
-  "/models/Duck/glTF-Draco/Duck.gltf", // Draco cannot be imported like this, draco loader needs to be setup first
-  //   "/models/Duck/glTF-Embedded/Duck.gltf",
-  (gltf) => {
-    scene.add(gltf.scene.children[0]);
-  },
-  () => {
-    console.log("progress");
-  },
-  (error) => console.error(error),
-);
+// gltfLoader.load(
+//   // "/models/Duck/glTF/Duck.gltf",
+//   //   "/models/Duck/glTF-Binary/Duck.glb",
+//   "/models/Duck/glTF-Draco/Duck.gltf", // Draco cannot be imported like this, draco loader needs to be setup first
+//   //   "/models/Duck/glTF-Embedded/Duck.gltf",
+//   (gltf) => {
+//     scene.add(gltf.scene.children[0]);
+//   },
+//   () => {
+//     console.log("progress");
+//   },
+//   (error) => console.error(error),
+// );
 
 // gltfLoader.load(
 //   "/models/FlightHelmet/glTF/FlightHelmet.gltf",
@@ -61,6 +61,26 @@ gltfLoader.load(
 //   },
 //   (error) => console.error(error),
 // );
+
+// Fox Model
+
+let mixer = null;
+
+gltfLoader.load(
+  "/models/Fox/glTF/Fox.gltf",
+  (gltf) => {
+    mixer = new THREE.AnimationMixer(gltf.scene);
+    const action = mixer.clipAction(gltf.animations[2]);
+    action.play();
+
+    gltf.scene.scale.set(0.025, 0.025, 0.025);
+    scene.add(gltf.scene);
+  },
+  (progress) => {
+    console.log(progress);
+  },
+  (error) => console.error(error),
+);
 
 /**
  * Floor
@@ -155,6 +175,9 @@ const tick = () => {
   const elapsedTime = clock.getElapsedTime();
   const deltaTime = elapsedTime - previousTime;
   previousTime = elapsedTime;
+
+  // Update Mixer
+  mixer?.update(deltaTime);
 
   // Update controls
   controls.update();
