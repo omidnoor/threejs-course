@@ -124,21 +124,23 @@ const tick = () => {
   object3.position.y = Math.sin(elapsedTime * 1.5) * 1.5;
 
   // Cast a Ray
+  raycaster.setFromCamera(mouse, camera);
+
   //   const rayOrigin = new THREE.Vector3(-3, 0, 0);
   //   const rayDirection = new THREE.Vector3(1, 0, 0);
   //   rayDirection.normalize();
   //   raycaster.set(rayOrigin, rayDirection);
 
-  //   const objectToTest = [object1, object2, object3];
-  //   const intersects = raycaster.intersectObjects(scene.children);
+  const objectToTest = [object1, object2, object3];
+  const intersects = raycaster.intersectObjects(objectToTest);
 
-  //   for (const object of objectToTest) {
-  //     object.material.color.set("#ff0000");
-  //   }
+  for (const object of objectToTest) {
+    object.material.color.set("#ff0000");
+  }
 
-  //   for (const intersect of intersects) {
-  //     intersect.object.material.color.set("#0000ff");
-  //   }
+  for (const intersect of intersects) {
+    intersect.object.material.color.set("#0000ff");
+  }
 
   // Update controls
   controls.update();
