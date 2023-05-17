@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as dat from "lil-gui";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 
 /**
  * Base
@@ -18,9 +19,17 @@ const scene = new THREE.Scene();
 /**
  * Models
  */
+const dracoLoader = new DRACOLoader();
 const gltfLoader = new GLTFLoader();
+
+dracoLoader.setDecoderPath("/draco/");
+gltfLoader.setDRACOLoader(dracoLoader);
+
 gltfLoader.load(
-  "/models/Duck/glTF/Duck.gltf",
+  // "/models/Duck/glTF/Duck.gltf",
+  //   "/models/Duck/glTF-Binary/Duck.glb",
+  "/models/Duck/glTF-Draco/Duck.gltf", // Draco cannot be imported like this, draco loader needs to be setup first
+  //   "/models/Duck/glTF-Embedded/Duck.gltf",
   (gltf) => {
     scene.add(gltf.scene.children[0]);
   },
@@ -29,6 +38,29 @@ gltfLoader.load(
   },
   (error) => console.error(error),
 );
+
+// gltfLoader.load(
+//   "/models/FlightHelmet/glTF/FlightHelmet.gltf",
+//   //   "/models/FlightHelmet/glTF-Binary/FlightHelmet.glb",
+//   // "/models/FlightHelmet/glTF-Draco/FlightHelmet.gltf", // Draco cannot be imported like this
+//   //   "/models/FlightHelmet/glTF-Embedded/FlightHelmet.gltf",
+//   (gltf) => {
+//     // One way to import model parts in scene
+//     // for (const child of [...gltf.scene.children]) {
+//     //   scene.add(child);
+//     // }
+//     // Second way to import model parts in scene
+//     // while (gltf.scene.children.length) {
+//     //   scene.add(gltf.scene.children[0]);
+//     // }
+//     // Third way to import model parts in scene (whole model)
+//     scene.add(gltf.scene);
+//   },
+//   () => {
+//     console.log("progress");
+//   },
+//   (error) => console.error(error),
+// );
 
 /**
  * Floor
