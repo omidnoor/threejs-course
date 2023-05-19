@@ -50,6 +50,7 @@ const environmentMap = cubeTextureLoader.load([
 ]);
 scene.background = environmentMap;
 scene.environment = environmentMap; // instead of child.material.envMap = environmentMap;
+environmentMap.outputColorSpace = THREE.SRGBColorSpace;
 
 debugObject.envMapIntensity = 5;
 gui
@@ -159,6 +160,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.physicallyCorrectLights = true;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 /**
  * Animate
