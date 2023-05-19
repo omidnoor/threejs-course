@@ -33,6 +33,9 @@ const updateMaterials = () => {
     ) {
       //   child.material.envMap = environmentMap;
       child.material.envMapIntensity = debugObject.envMapIntensity;
+      child.material.needsUpdate = true;
+      child.castShadow = true;
+      child.receiveShadow = true;
     }
   });
 };
@@ -85,7 +88,16 @@ gltfLoader.load("/models/FlightHelmet/glTF/FlightHelmet.gltf", (gltf) => {
  */
 const directionaLight = new THREE.DirectionalLight(0xffffff, 3);
 directionaLight.position.set(0.25, 3, -2.25);
+directionaLight.castShadow = true;
+directionaLight.shadow.camera.near = 1;
+directionaLight.shadow.camera.far = 15;
+directionaLight.shadow.mapSize.set(1024, 1024);
 scene.add(directionaLight);
+
+// const directionaLightCameraHelper = new THREE.CameraHelper(
+//   directionaLight.shadow.camera,
+// );
+// scene.add(directionaLightCameraHelper);
 
 gui
   .add(directionaLight, "intensity")
@@ -164,6 +176,8 @@ renderer.physicallyCorrectLights = true;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 3;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 gui.add(renderer, "toneMapping", {
   No: THREE.NoToneMapping,
