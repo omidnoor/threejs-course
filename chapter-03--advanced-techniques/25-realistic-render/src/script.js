@@ -44,12 +44,12 @@ const updateMaterials = () => {
  * Enviroment map
  */
 const environmentMap = cubeTextureLoader.load([
-  "/textures/environmentMaps/0/px.jpg",
-  "/textures/environmentMaps/0/nx.jpg",
-  "/textures/environmentMaps/0/py.jpg",
-  "/textures/environmentMaps/0/ny.jpg",
-  "/textures/environmentMaps/0/pz.jpg",
-  "/textures/environmentMaps/0/nz.jpg",
+  "/textures/environmentMaps/1/px.jpg",
+  "/textures/environmentMaps/1/nx.jpg",
+  "/textures/environmentMaps/1/py.jpg",
+  "/textures/environmentMaps/1/ny.jpg",
+  "/textures/environmentMaps/1/pz.jpg",
+  "/textures/environmentMaps/1/nz.jpg",
 ]);
 scene.background = environmentMap;
 scene.environment = environmentMap; // instead of child.material.envMap = environmentMap;
