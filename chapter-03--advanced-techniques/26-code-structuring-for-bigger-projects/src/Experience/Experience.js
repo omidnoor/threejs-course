@@ -2,15 +2,24 @@ import * as THREE from "three";
 
 import Time from "./Utils/Time.js";
 import Sizes from "./Utils/Sizes.js";
+import Camera from "./Camera.js";
+
+let instance = null;
 
 export default class Experience {
   constructor(canvas) {
+    if (instance) {
+      return instance;
+    }
+    instance = this;
+
     window.experience = this;
     this.canvas = canvas;
 
     this.sizes = new Sizes();
     this.time = new Time();
     this.scene = new THREE.Scene();
+    this.camera = new Camera();
 
     // Sizes resize event listener
     this.sizes.on("resize", () => {
@@ -23,9 +32,11 @@ export default class Experience {
     });
   }
 
-  resize() {}
+  resize() {
+    this.camera.resize(this.sizes.width, this.sizes.height);
+  }
 
   update() {
-    console.log("updated experinece");
+    this.camera.update();
   }
 }
