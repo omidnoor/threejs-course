@@ -37,7 +37,6 @@ export default class Resources extends EventEmitter {
         this.loaders.textureLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
         });
-        console.log(source);
       } else if (source.type === "cubeTexture") {
         this.loaders.cubeTextureLoader.load(source.path, (file) => {
           this.sourceLoaded(source, file);
