@@ -7,6 +7,12 @@ export default class Environment {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
+    this.debug = this.experience.debug;
+
+    // Debug
+    if (this.debug.active) {
+      this.debugFolder = this.debug.ui.addFolder("Environment");
+    }
 
     this.setSunLight();
     this.setEnvironmentMap();
@@ -20,6 +26,37 @@ export default class Environment {
     this.sunLight.shadow.normalBias = 0.05;
     this.sunLight.position.set(3.5, 2, -1.25);
     this.scene.add(this.sunLight);
+
+    // Debug
+    if (this.debug.active) {
+      this.debugFolder
+        .add(this.sunLight.position, "x")
+        .min(0)
+        .max(10)
+        .step(0.001)
+        .name("sunLightX");
+
+      this.debugFolder
+        .add(this.sunLight.position, "y")
+        .min(0)
+        .max(10)
+        .step(0.001)
+        .name("sunLightY");
+
+      this.debugFolder
+        .add(this.sunLight.position, "z")
+        .min(0)
+        .max(10)
+        .step(0.001)
+        .name("sunLightZ");
+
+      this.debugFolder
+        .add(this.sunLight, "intensity")
+        .min(0)
+        .max(10)
+        .step(0.001)
+        .name("sunLightIntensity");
+    }
   }
 
   setEnvironmentMap() {
@@ -44,5 +81,16 @@ export default class Environment {
     };
 
     this.environmentMap.updateMaterial();
+
+    // Debug
+    if (this.debug.active) {
+      this.debugFolder
+        .add(this.environmentMap, "intensity")
+        .min(0)
+        .max(5)
+        .step(0.001)
+        .name("envMapIntensity")
+        .onChange(this.environmentMap.updateMaterial);
+    }
   }
 }
