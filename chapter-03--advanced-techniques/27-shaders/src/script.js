@@ -40,7 +40,14 @@ const material = new THREE.RawShaderMaterial({
   vertexShader: testVertexShader,
   fragmentShader: testFragmentShader,
   transparent: true,
+  uniforms: {
+    uFrequency: { value: new THREE.Vector2(10, 5) },
+    uTime: { value: 0 },
+  },
 });
+
+gui.add(material.uniforms.uFrequency.value, "x").min(1).max(20).step(0.01);
+gui.add(material.uniforms.uFrequency.value, "y").min(1).max(20).step(0.01);
 
 // Mesh
 const mesh = new THREE.Mesh(geometry, material);
@@ -98,9 +105,14 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
  * Animate
  */
 const clock = new THREE.Clock();
+// let currentTime = Date.now();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+  //   const delta = elapsedTime - currentTime;
+  //   currentTime = elapsedTime;
+  // Update Material
+  material.uniforms.uTime.value = elapsedTime;
 
   // Update controls
   controls.update();
