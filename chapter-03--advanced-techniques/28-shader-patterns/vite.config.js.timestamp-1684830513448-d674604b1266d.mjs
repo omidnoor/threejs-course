@@ -1,0 +1,25 @@
+// vite.config.js
+import glsl from "file:///D:/Web%20Dev%20Courses/ThreeJS-Course/chapter-03--advanced-techniques/28-shader-patterns/node_modules/vite-plugin-glsl/src/index.js";
+var isCodeSandbox = "SANDBOX_URL" in process.env || "CODESANDBOX_HOST" in process.env;
+var vite_config_default = {
+  root: "src/",
+  publicDir: "../static/",
+  base: "./",
+  server: {
+    host: true,
+    open: !isCodeSandbox
+    // Open if it's not a CodeSandbox
+  },
+  build: {
+    outDir: "../dist",
+    emptyOutDir: true,
+    sourcemap: true
+  },
+  plugins: [
+    glsl()
+  ]
+};
+export {
+  vite_config_default as default
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZS5jb25maWcuanMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImNvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9kaXJuYW1lID0gXCJEOlxcXFxXZWIgRGV2IENvdXJzZXNcXFxcVGhyZWVKUy1Db3Vyc2VcXFxcY2hhcHRlci0wMy0tYWR2YW5jZWQtdGVjaG5pcXVlc1xcXFwyOC1zaGFkZXItcGF0dGVybnNcIjtjb25zdCBfX3ZpdGVfaW5qZWN0ZWRfb3JpZ2luYWxfZmlsZW5hbWUgPSBcIkQ6XFxcXFdlYiBEZXYgQ291cnNlc1xcXFxUaHJlZUpTLUNvdXJzZVxcXFxjaGFwdGVyLTAzLS1hZHZhbmNlZC10ZWNobmlxdWVzXFxcXDI4LXNoYWRlci1wYXR0ZXJuc1xcXFx2aXRlLmNvbmZpZy5qc1wiO2NvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9pbXBvcnRfbWV0YV91cmwgPSBcImZpbGU6Ly8vRDovV2ViJTIwRGV2JTIwQ291cnNlcy9UaHJlZUpTLUNvdXJzZS9jaGFwdGVyLTAzLS1hZHZhbmNlZC10ZWNobmlxdWVzLzI4LXNoYWRlci1wYXR0ZXJucy92aXRlLmNvbmZpZy5qc1wiO2ltcG9ydCBnbHNsIGZyb20gJ3ZpdGUtcGx1Z2luLWdsc2wnXG5cbmNvbnN0IGlzQ29kZVNhbmRib3ggPSAnU0FOREJPWF9VUkwnIGluIHByb2Nlc3MuZW52IHx8ICdDT0RFU0FOREJPWF9IT1NUJyBpbiBwcm9jZXNzLmVudlxuXG5leHBvcnQgZGVmYXVsdCB7XG4gICAgcm9vdDogJ3NyYy8nLFxuICAgIHB1YmxpY0RpcjogJy4uL3N0YXRpYy8nLFxuICAgIGJhc2U6ICcuLycsXG4gICAgc2VydmVyOlxuICAgIHtcbiAgICAgICAgaG9zdDogdHJ1ZSxcbiAgICAgICAgb3BlbjogIWlzQ29kZVNhbmRib3ggLy8gT3BlbiBpZiBpdCdzIG5vdCBhIENvZGVTYW5kYm94XG4gICAgfSxcbiAgICBidWlsZDpcbiAgICB7XG4gICAgICAgIG91dERpcjogJy4uL2Rpc3QnLFxuICAgICAgICBlbXB0eU91dERpcjogdHJ1ZSxcbiAgICAgICAgc291cmNlbWFwOiB0cnVlXG4gICAgfSxcbiAgICBwbHVnaW5zOlxuICAgIFtcbiAgICAgICAgZ2xzbCgpXG4gICAgXVxufSJdLAogICJtYXBwaW5ncyI6ICI7QUFBNGIsT0FBTyxVQUFVO0FBRTdjLElBQU0sZ0JBQWdCLGlCQUFpQixRQUFRLE9BQU8sc0JBQXNCLFFBQVE7QUFFcEYsSUFBTyxzQkFBUTtBQUFBLEVBQ1gsTUFBTTtBQUFBLEVBQ04sV0FBVztBQUFBLEVBQ1gsTUFBTTtBQUFBLEVBQ04sUUFDQTtBQUFBLElBQ0ksTUFBTTtBQUFBLElBQ04sTUFBTSxDQUFDO0FBQUE7QUFBQSxFQUNYO0FBQUEsRUFDQSxPQUNBO0FBQUEsSUFDSSxRQUFRO0FBQUEsSUFDUixhQUFhO0FBQUEsSUFDYixXQUFXO0FBQUEsRUFDZjtBQUFBLEVBQ0EsU0FDQTtBQUFBLElBQ0ksS0FBSztBQUFBLEVBQ1Q7QUFDSjsiLAogICJuYW1lcyI6IFtdCn0K
