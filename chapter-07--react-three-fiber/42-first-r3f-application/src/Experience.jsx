@@ -11,18 +11,18 @@ const Experience = () => {
   const { camera, gl } = useThree();
 
   useFrame((state, delta) => {
-    // cubeRef.current.rotation.z += delta;
-    // cubeRef.current.rotation.x += delta;
-    // cubeRef.current.rotation.y += delta;
-    const angle = state.clock.elapsedTime;
-    state.camera.position.x = Math.sin(angle) * 8;
-    state.camera.position.z = Math.cos(angle) * 8;
-    state.camera.lookAt(0, 0, 0);
+    cubeRef.current.rotation.z += delta;
+    cubeRef.current.rotation.x += delta;
+    cubeRef.current.rotation.y += delta;
+    // const angle = state.clock.elapsedTime;
+    // state.camera.position.x = Math.sin(angle) * 8;
+    // state.camera.position.z = Math.cos(angle) * 8;
+    // state.camera.lookAt(0, 0, 0);
   });
 
   return (
     <>
-      {/* <orbitControls args={[camera, gl.domElement]} /> */}
+      <orbitControls args={[camera, gl.domElement]} />
 
       <directionalLight position={[1, 1, 1]} color={"white"} intensity={1} />
       <ambientLight intensity={0.5} />
