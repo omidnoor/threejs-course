@@ -9,8 +9,10 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 root.render(
   <Canvas
     // flat // no toneMapping
+    // dpr={[1, 2]} // it's by default
     gl={{
       toneMapping: THREE.CineonToneMapping,
+      // outputColorSpace: THREE.LinearSRGBColorSpace,
       // antialias: false,
     }}
     camera={{
