@@ -11,8 +11,6 @@ const CustomObject = () => {
 
   const verticesCount = 10 * 3;
 
-  console.log(geometryRef);
-
   const positions = useMemo(() => {
     const positions = new Float32Array(verticesCount * 3);
 
