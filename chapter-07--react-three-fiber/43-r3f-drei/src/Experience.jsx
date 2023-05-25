@@ -5,6 +5,7 @@ import {
   Html,
   Text,
   Float,
+  MeshReflectorMaterial,
 } from "@react-three/drei";
 import { useRef } from "react";
 
@@ -44,7 +45,14 @@ export default function Experience() {
       {/* <TransformControls object={cube} mode="translate" /> */}
       <mesh position-y={-1} rotation-x={-Math.PI * 0.5} scale={10}>
         <planeGeometry />
-        <meshStandardMaterial color="green" />
+        {/* <meshStandardMaterial color="green" /> */}
+        <MeshReflectorMaterial
+          resolution={512}
+          blur={[100, 100]}
+          mixBlur={0.5}
+          mirror={1}
+          color="greenyellow"
+        />
       </mesh>
 
       <Float speed={1} floatIntensity={1}>
