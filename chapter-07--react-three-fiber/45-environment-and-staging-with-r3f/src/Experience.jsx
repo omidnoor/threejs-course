@@ -62,7 +62,7 @@ export default function Experience() {
   return (
     <>
       <Environment
-        background
+        // background
         // files={[
         //   "./environmentMaps/2/px.jpg",
         //   "./environmentMaps/2/nx.jpg",
@@ -72,17 +72,23 @@ export default function Experience() {
         //   "./environmentMaps/2/nz.jpg",
         // ]}
         // files={"./environmentMaps/the_sky_is_on_fire_2k.hdr"}
-        // preset="sunset"
+        preset="sunset"
         // preset="night"
+        // resolution={32}
+        ground={{
+          height: 7,
+          radius: 28,
+          scale: 100,
+        }}
       >
-        <color args={["#000000"]} attach="background" />
-        <Lightformer
+        {/* <color args={["#000000"]} attach="background" /> */}
+        {/* <Lightformer
           position-z={-5}
           scale={10}
           color="red"
-          intensity={100}
-          //   form="ring"
-        />
+          intensity={1}
+          form="ring"
+        /> */}
         {/* <mesh position-z={-5} scale={10}>
           <planeGeometry />
           <meshBasicMaterial color={[10, 0, 0]} />
@@ -151,7 +157,7 @@ export default function Experience() {
 
       {/* <Sky sunPosition={sunPosition} /> */}
 
-      <mesh position-x={-2} castShadow>
+      <mesh position-x={-2} position-y={1} castShadow>
         <sphereGeometry />
         <meshStandardMaterial
           color="orange"
@@ -159,7 +165,7 @@ export default function Experience() {
         />
       </mesh>
       {/* <PivotControls> */}
-      <mesh ref={cube} position-x={2} scale={1.5} castShadow>
+      <mesh ref={cube} position-x={2} position-y={1} scale={1.5} castShadow>
         <boxGeometry />
         <meshStandardMaterial
           color="mediumpurple"
@@ -168,8 +174,8 @@ export default function Experience() {
       </mesh>
       {/* </PivotControls> */}
 
-      <mesh
-        position-y={-1}
+      {/* <mesh
+        position-y={0}
         rotation-x={-Math.PI * 0.5}
         scale={10}
         // receiveShadow
@@ -179,7 +185,7 @@ export default function Experience() {
           color="greenyellow"
           envMapIntensity={envMapIntensity}
         />
-      </mesh>
+      </mesh> */}
     </>
   );
 }
