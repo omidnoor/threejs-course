@@ -9,8 +9,8 @@ const root = ReactDOM.createRoot(document.querySelector("#root"));
 const created = (state) => {
   //   console.log(state.gl);
   //   state.gl.setClearColor("#ff0000", 1); // change background color
-  console.log(state.scene);
-  state.scene.background = new THREE.Color("#ff0000");
+  //   console.log(state.scene);
+  //   state.scene.background = new THREE.Color("#ff0000");
 };
 
 root.render(
@@ -23,6 +23,7 @@ root.render(
     }}
     onCreated={created}
   >
+    <color args={["#ff00ff"]} attach="background" />
     <Experience />
   </Canvas>,
 );
