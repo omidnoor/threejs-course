@@ -70,8 +70,16 @@ export default function Experience() {
         //   "./environmentMaps/2/pz.jpg",
         //   "./environmentMaps/2/nz.jpg",
         // ]}
-        files={"./environmentMaps/the_sky_is_on_fire_2k.hdr"}
-      />
+        // files={"./environmentMaps/the_sky_is_on_fire_2k.hdr"}
+        // preset="sunset"
+        // preset="night"
+      >
+        <color args={["#000000"]} attach="background" />
+        <mesh position-z={-5} scale={10}>
+          <planeGeometry />
+          <meshBasicMaterial color={[10, 0, 0]} />
+        </mesh>
+      </Environment>
 
       {/* <BakeShadows /> */}
 
