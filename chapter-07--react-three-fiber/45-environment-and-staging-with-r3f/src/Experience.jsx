@@ -9,6 +9,7 @@ import {
   PivotControls,
   ContactShadows,
   Sky,
+  Environment,
 } from "@react-three/drei";
 import { useRef } from "react";
 import { Perf } from "r3f-perf";
@@ -53,8 +54,24 @@ export default function Experience() {
     },
   });
 
+  const { envMapIntensity } = useControls("environment map", {
+    envMapIntensity: { value: 3.5, min: 0, max: 12, step: 0.01 },
+  });
+
   return (
     <>
+      <Environment
+        background
+        files={[
+          "./environmentMaps/2/px.jpg",
+          "./environmentMaps/2/nx.jpg",
+          "./environmentMaps/2/py.jpg",
+          "./environmentMaps/2/ny.jpg",
+          "./environmentMaps/2/pz.jpg",
+          "./environmentMaps/2/nz.jpg",
+        ]}
+      />
+
       {/* <BakeShadows /> */}
 
       {/* <SoftShadows
@@ -100,7 +117,7 @@ export default function Experience() {
         frames={1} // 1 frame means shadow is baked
       />
 
-      <directionalLight
+      {/* <directionalLight
         ref={directionalLight}
         position={sunPosition}
         intensity={1.5}
@@ -112,19 +129,25 @@ export default function Experience() {
         shadow-camera-bottom={-5}
         shadow-camera-right={5}
         shadow-camera-left={-5}
-      />
-      <ambientLight intensity={0.5} />
+      /> */}
+      {/* <ambientLight intensity={0.5} /> */}
 
-      <Sky sunPosition={sunPosition} />
+      {/* <Sky sunPosition={sunPosition} /> */}
 
       <mesh position-x={-2} castShadow>
         <sphereGeometry />
-        <meshStandardMaterial color="orange" />
+        <meshStandardMaterial
+          color="orange"
+          envMapIntensity={envMapIntensity}
+        />
       </mesh>
       {/* <PivotControls> */}
       <mesh ref={cube} position-x={2} scale={1.5} castShadow>
         <boxGeometry />
-        <meshStandardMaterial color="mediumpurple" />
+        <meshStandardMaterial
+          color="mediumpurple"
+          envMapIntensity={envMapIntensity}
+        />
       </mesh>
       {/* </PivotControls> */}
 
@@ -135,7 +158,10 @@ export default function Experience() {
         // receiveShadow
       >
         <planeGeometry />
-        <meshStandardMaterial color="greenyellow" />
+        <meshStandardMaterial
+          color="greenyellow"
+          envMapIntensity={envMapIntensity}
+        />
       </mesh>
     </>
   );
