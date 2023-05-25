@@ -4,6 +4,7 @@ import {
   PivotControls,
   Html,
   Text,
+  Float,
 } from "@react-three/drei";
 import { useRef } from "react";
 
@@ -45,16 +46,19 @@ export default function Experience() {
         <planeGeometry />
         <meshStandardMaterial color="green" />
       </mesh>
-      <Text
-        font="./bangers-v20-latin-regular.woff"
-        fontSize={1}
-        position={[0, 2, -1]}
-        maxWidth={2}
-        textAlign="center"
-        color="salmon"
-      >
-        I love R3F
-      </Text>
+
+      <Float speed={1} floatIntensity={1}>
+        <Text
+          font="./bangers-v20-latin-regular.woff"
+          fontSize={1}
+          position={[0, 2, -1]}
+          maxWidth={2}
+          textAlign="center"
+          color="salmon"
+        >
+          I love R3F
+        </Text>
+      </Float>
     </>
   );
 }
