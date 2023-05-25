@@ -3,19 +3,11 @@ import {
   OrbitControls,
   useHelper,
   BakeShadows,
-  softShadows,
+  SoftShadows,
 } from "@react-three/drei";
 import { useRef } from "react";
 import { Perf } from "r3f-perf";
 import * as THREE from "three";
-
-softShadows({
-  frustum: 3.75,
-  size: 0.005,
-  near: 9.5,
-  samples: 17,
-  rings: 11,
-});
 
 export default function Experience() {
   const cube = useRef();
@@ -33,7 +25,15 @@ export default function Experience() {
 
   return (
     <>
-      <BakeShadows />
+      {/* <BakeShadows /> */}
+
+      {/* <SoftShadows
+        frustum={3.8}
+        size={0.001}
+        near={9.5}
+        samples={17}
+        rings={11}
+      /> */}
 
       <Perf position="top-left" />
 

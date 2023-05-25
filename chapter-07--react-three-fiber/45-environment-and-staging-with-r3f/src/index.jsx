@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import { Canvas } from "@react-three/fiber";
 import Experience from "./Experience.jsx";
 import * as THREE from "three";
+import { useControls } from "leva";
+import { SoftShadows } from "@react-three/drei";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 
