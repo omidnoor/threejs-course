@@ -8,6 +8,7 @@ import {
   RandomizedLight,
   PivotControls,
   ContactShadows,
+  Sky,
 } from "@react-three/drei";
 import { useRef } from "react";
 import { Perf } from "r3f-perf";
@@ -43,6 +44,12 @@ export default function Experience() {
       max: 10,
       value: 2.8,
       step: 0.01,
+    },
+  });
+
+  const { sunPosition } = useControls("sky", {
+    sunPosition: {
+      value: [1, 2, 3],
     },
   });
 
@@ -95,7 +102,7 @@ export default function Experience() {
 
       <directionalLight
         ref={directionalLight}
-        position={[1, 2, 3]}
+        position={sunPosition}
         intensity={1.5}
         castShadow
         shadow-mapSize={[1024, 1024]}
@@ -107,6 +114,8 @@ export default function Experience() {
         shadow-camera-left={-5}
       />
       <ambientLight intensity={0.5} />
+
+      <Sky sunPosition={sunPosition} />
 
       <mesh position-x={-2} castShadow>
         <sphereGeometry />
