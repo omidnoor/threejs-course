@@ -10,6 +10,7 @@ import {
   ContactShadows,
   Sky,
   Environment,
+  Lightformer,
 } from "@react-three/drei";
 import { useRef } from "react";
 import { Perf } from "r3f-perf";
@@ -75,10 +76,17 @@ export default function Experience() {
         // preset="night"
       >
         <color args={["#000000"]} attach="background" />
-        <mesh position-z={-5} scale={10}>
+        <Lightformer
+          position-z={-5}
+          scale={10}
+          color="red"
+          intensity={100}
+          //   form="ring"
+        />
+        {/* <mesh position-z={-5} scale={10}>
           <planeGeometry />
           <meshBasicMaterial color={[10, 0, 0]} />
-        </mesh>
+        </mesh> */}
       </Environment>
 
       {/* <BakeShadows /> */}
