@@ -4,6 +4,9 @@ import {
   useHelper,
   BakeShadows,
   SoftShadows,
+  AccumulativeShadows,
+  RandomizedLight,
+  PivotControls,
 } from "@react-three/drei";
 import { useRef } from "react";
 import { Perf } from "r3f-perf";
@@ -39,6 +42,25 @@ export default function Experience() {
 
       <OrbitControls makeDefault />
 
+      <AccumulativeShadows
+        position={[0, -0.99, 0]}
+        scale={10}
+        color={0x316d39}
+        opacity={0.8}
+        frames={2000}
+        temporal
+      >
+        <RandomizedLight
+          ref={directionalLight}
+          position={[1, 2, 3]}
+          amount={8}
+          radius={1}
+          intensity={1}
+          ambient={0.5}
+          bias={0.01}
+        />
+      </AccumulativeShadows>
+
       <directionalLight
         ref={directionalLight}
         position={[1, 2, 3]}
@@ -58,17 +80,18 @@ export default function Experience() {
         <sphereGeometry />
         <meshStandardMaterial color="orange" />
       </mesh>
-
+      {/* <PivotControls> */}
       <mesh ref={cube} position-x={2} scale={1.5} castShadow>
         <boxGeometry />
         <meshStandardMaterial color="mediumpurple" />
       </mesh>
+      {/* </PivotControls> */}
 
       <mesh
         position-y={-1}
         rotation-x={-Math.PI * 0.5}
         scale={10}
-        receiveShadow
+        // receiveShadow
       >
         <planeGeometry />
         <meshStandardMaterial color="greenyellow" />
