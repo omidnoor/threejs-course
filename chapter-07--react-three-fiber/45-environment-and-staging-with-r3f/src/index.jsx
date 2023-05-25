@@ -2,12 +2,15 @@ import "./style.css";
 import ReactDOM from "react-dom/client";
 import { Canvas } from "@react-three/fiber";
 import Experience from "./Experience.jsx";
+import * as THREE from "three";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 
 const created = (state) => {
   //   console.log(state.gl);
   //   state.gl.setClearColor("#ff0000", 1); // change background color
+  console.log(state.scene);
+  state.scene.background = new THREE.Color("#ff0000");
 };
 
 root.render(
