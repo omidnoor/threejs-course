@@ -5,6 +5,7 @@ import {
   useMatcapTexture,
 } from "@react-three/drei";
 import { Perf } from "r3f-perf";
+import { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import * as THREE from "three";
@@ -16,6 +17,7 @@ const donutMaterial = new THREE.MeshMatcapMaterial();
 export default function Experience() {
   //   const [geometry, setGeometry] = useState(null);
   //   const [material, setMaterial] = useState(null);
+  const donutsGroup = useRef();
 
   const [textMatcapTexture] = useMatcapTexture(
     "605352_E9CCC5_C7A8A3_A89291",
@@ -60,27 +62,28 @@ export default function Experience() {
 
       {/* <torusGeometry ref={setGeometry} args={[1, 0.4, 64, 64]} />
       <meshMatcapMaterial ref={setMaterial} matcap={donutMatcapTexture} /> */}
-
-      {[...Array(100)].map((_, key) => {
-        return (
-          <mesh
-            key={key}
-            geometry={torusGeometry}
-            material={donutMaterial}
-            position={[
-              (Math.random() - 0.5) * 10,
-              (Math.random() - 0.5) * 10,
-              (Math.random() - 0.5) * 10,
-            ]}
-            scale={Math.random() * 0.2 + 0.2}
-            rotation={[
-              Math.random() * Math.PI,
-              Math.random() * Math.PI,
-              Math.random() * Math.PI,
-            ]}
-          />
-        );
-      })}
+      <group ref={donutsGroup}>
+        {[...Array(100)].map((_, key) => {
+          return (
+            <mesh
+              key={key}
+              geometry={torusGeometry}
+              material={donutMaterial}
+              position={[
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10,
+              ]}
+              scale={Math.random() * 0.2 + 0.2}
+              rotation={[
+                Math.random() * Math.PI,
+                Math.random() * Math.PI,
+                Math.random() * Math.PI,
+              ]}
+            />
+          );
+        })}
+      </group>
     </>
   );
 }
