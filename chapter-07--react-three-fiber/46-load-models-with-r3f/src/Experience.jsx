@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import Model from "./Model";
 import Placeholder from "./Placeholder";
 import Hamburger from "./Hamburger";
+import Fox from "./Fox";
 
 export default function Experience() {
   //   const model = useLoader(GLTFLoader, "./hamburger.glb");
@@ -51,6 +52,9 @@ export default function Experience() {
       <Suspense fallback={<Placeholder position-y={0.5} scale={[2, 3, 2]} />}>
         <Hamburger scale={0.2} />
       </Suspense>
+
+      <Fox />
+
       {/* <primitive object={model.scene} scale={0.35} position={[-3, -1, 0]} /> */}
     </>
   );
