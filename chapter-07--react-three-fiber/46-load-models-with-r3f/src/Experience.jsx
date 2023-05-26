@@ -6,6 +6,7 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { Suspense } from "react";
 import Model from "./Model";
 import Placeholder from "./Placeholder";
+import Hamburger from "./Hamburger";
 
 export default function Experience() {
   //   const model = useLoader(GLTFLoader, "./hamburger.glb");
@@ -43,7 +44,7 @@ export default function Experience() {
         <meshStandardMaterial color="greenyellow" />
       </mesh>
       <Suspense fallback={<Placeholder position-y={0.5} scale={[2, 3, 2]} />}>
-        <Model />
+        <Hamburger scale={0.2} />
       </Suspense>
       {/* <primitive object={model.scene} scale={0.35} position={[-3, -1, 0]} /> */}
     </>
