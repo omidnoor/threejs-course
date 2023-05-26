@@ -4,7 +4,7 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { useGLTF } from "@react-three/drei";
 
 const Model = () => {
-  const model = useGLTF("./hamburger.glb");
+  const model = useGLTF("./hamburger-draco.glb");
 
   //   const model = useLoader(GLTFLoader, "./hamburger.glb");
 
@@ -19,4 +19,7 @@ const Model = () => {
   //   );
   return <primitive object={model.scene} scale={0.35} position-y={-1} />;
 };
+
+useGLTF.preload("./hamburger-draco.glb");
+
 export default Model;
