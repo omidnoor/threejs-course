@@ -1,7 +1,16 @@
-import { useGLTF } from "@react-three/drei";
+import { useGLTF, useAnimations } from "@react-three/drei";
+import { useEffect } from "react";
 
 const Fox = () => {
   const fox = useGLTF("./Fox/glTF/Fox.gltf");
+
+  const animations = useAnimations(fox.animations, fox.scene);
+
+  useEffect(() => {
+    const action = animations.actions.Run;
+    action.play();
+  }, []);
+
   return (
     <primitive
       object={fox.scene}
