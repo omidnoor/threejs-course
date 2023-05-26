@@ -12,10 +12,12 @@ export default function Experience() {
     256,
   );
   const [donutMatcapTexture] = useMatcapTexture(
-    "8A3B3D_DA5F62_461F20_BC7F81",
+    "1C70C6_09294C_0F3F73_52B3F6",
     256,
   );
 
+  const tempArray = [...Array(100)];
+  tempArray.map((item, index) => {});
   return (
     <>
       <Perf position="top-left" />
@@ -39,10 +41,27 @@ export default function Experience() {
         </Text3D>
       </Center>
 
-      <mesh scale={1.5}>
-        <torusGeometry args={[1, 0.4, 16, 32]} />
-        <meshMatcapMaterial matcap={donutMatcapTexture} />
-      </mesh>
+      {[...Array(100)].map((_, key) => {
+        return (
+          <mesh
+            key={key}
+            position={[
+              (Math.random() - 0.5) * 10,
+              (Math.random() - 0.5) * 10,
+              (Math.random() - 0.5) * 10,
+            ]}
+            scale={Math.random() * 0.2 + 0.2}
+            rotation={[
+              Math.random() * Math.PI,
+              Math.random() * Math.PI,
+              Math.random() * Math.PI,
+            ]}
+          >
+            <torusKnotGeometry args={[1, 0.4, 64, 64]} />
+            <meshMatcapMaterial matcap={donutMatcapTexture} />
+          </mesh>
+        );
+      })}
     </>
   );
 }
