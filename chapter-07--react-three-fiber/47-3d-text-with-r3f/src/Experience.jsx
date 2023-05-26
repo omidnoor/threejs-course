@@ -18,7 +18,8 @@ const donutMaterial = new THREE.MeshMatcapMaterial();
 export default function Experience() {
   //   const [geometry, setGeometry] = useState(null);
   //   const [material, setMaterial] = useState(null);
-  const donutsGroup = useRef();
+  //   const donutsGroup = useRef();
+  const donuts = useRef([]);
 
   const [textMatcapTexture] = useMatcapTexture(
     "605352_E9CCC5_C7A8A3_A89291",
@@ -38,8 +39,15 @@ export default function Experience() {
     donutMaterial.needsUpdate = true;
   }, []);
 
+  //   useFrame((state, delta) => {
+  //     donutsGroup.current.children.map((mesh) => {
+  //       mesh.rotation.x += 0.1 * delta;
+  //       mesh.rotation.y += 0.1 * delta;
+  //       mesh.rotation.z += 0.1 * delta;
+  //     });
+  //   });
   useFrame((state, delta) => {
-    donutsGroup.current.children.map((mesh) => {
+    donuts.current.map((mesh) => {
       mesh.rotation.x += 0.1 * delta;
       mesh.rotation.y += 0.1 * delta;
       mesh.rotation.z += 0.1 * delta;
@@ -71,28 +79,29 @@ export default function Experience() {
 
       {/* <torusGeometry ref={setGeometry} args={[1, 0.4, 64, 64]} />
       <meshMatcapMaterial ref={setMaterial} matcap={donutMatcapTexture} /> */}
-      <group ref={donutsGroup}>
-        {[...Array(100)].map((_, key) => {
-          return (
-            <mesh
-              key={key}
-              geometry={torusGeometry}
-              material={donutMaterial}
-              position={[
-                (Math.random() - 0.5) * 10,
-                (Math.random() - 0.5) * 10,
-                (Math.random() - 0.5) * 10,
-              ]}
-              scale={Math.random() * 0.2 + 0.2}
-              rotation={[
-                Math.random() * Math.PI,
-                Math.random() * Math.PI,
-                Math.random() * Math.PI,
-              ]}
-            />
-          );
-        })}
-      </group>
+      {/* <group ref={donutsGroup}> */}
+      {[...Array(100)].map((_, index) => {
+        return (
+          <mesh
+            ref={(element) => (donuts.current[index] = element)}
+            key={index}
+            geometry={torusGeometry}
+            material={donutMaterial}
+            position={[
+              (Math.random() - 0.5) * 10,
+              (Math.random() - 0.5) * 10,
+              (Math.random() - 0.5) * 10,
+            ]}
+            scale={Math.random() * 0.2 + 0.2}
+            rotation={[
+              Math.random() * Math.PI,
+              Math.random() * Math.PI,
+              Math.random() * Math.PI,
+            ]}
+          />
+        );
+      })}
+      {/* </group> */}
     </>
   );
 }
