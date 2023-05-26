@@ -1,10 +1,11 @@
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import { useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { Suspense } from "react";
 import Model from "./Model";
+import Placeholder from "./Placeholder";
 
 export default function Experience() {
   //   const model = useLoader(GLTFLoader, "./hamburger.glb");
@@ -41,17 +42,10 @@ export default function Experience() {
         <planeGeometry />
         <meshStandardMaterial color="greenyellow" />
       </mesh>
-      <Suspense
-        fallback={
-          <mesh position-y={0.5} scale={[2, 3, 2]}>
-            <boxGeometry args={[1, 1, 1, 2, 2, 2]} />
-            <meshBasicMaterial wireframe color="red" />
-          </mesh>
-        }
-      >
+      <Suspense fallback={<Placeholder position-y={0.5} scale={[2, 3, 2]} />}>
         <Model />
       </Suspense>
-      {/* <primitive object={model.scene} scale={5} position-y={-1} /> */}
+      {/* <primitive object={model.scene} scale={0.35} position={[-3, -1, 0]} /> */}
     </>
   );
 }
