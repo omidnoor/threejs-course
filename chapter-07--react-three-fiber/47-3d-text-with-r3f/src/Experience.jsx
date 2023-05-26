@@ -9,6 +9,7 @@ import { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import * as THREE from "three";
+import { useFrame } from "@react-three/fiber";
 
 const torusGeometry = new THREE.TorusGeometry(1, 0.6, 16, 32);
 const textMaterial = new THREE.MeshMatcapMaterial();
@@ -36,6 +37,14 @@ export default function Experience() {
     donutMaterial.matcap = donutMatcapTexture;
     donutMaterial.needsUpdate = true;
   }, []);
+
+  useFrame((state, delta) => {
+    donutsGroup.current.children.map((mesh) => {
+      mesh.rotation.x += 0.1 * delta;
+      mesh.rotation.y += 0.1 * delta;
+      mesh.rotation.z += 0.1 * delta;
+    });
+  });
 
   return (
     <>
