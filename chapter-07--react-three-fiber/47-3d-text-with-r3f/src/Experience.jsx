@@ -1,7 +1,14 @@
-import { OrbitControls, Text3D, Center } from "@react-three/drei";
+import {
+  OrbitControls,
+  Text3D,
+  Center,
+  useMatcapTexture,
+} from "@react-three/drei";
 import { Perf } from "r3f-perf";
 
 export default function Experience() {
+  const [matcapTexture] = useMatcapTexture("605352_E9CCC5_C7A8A3_A89291", 256);
+
   return (
     <>
       <Perf position="top-left" />
@@ -24,7 +31,7 @@ export default function Experience() {
           bevelSegments={5}
         >
           I LOVE R3F !
-          <meshNormalMaterial />
+          <meshMatcapMaterial matcap={matcapTexture} />
         </Text3D>
       </Center>
     </>
