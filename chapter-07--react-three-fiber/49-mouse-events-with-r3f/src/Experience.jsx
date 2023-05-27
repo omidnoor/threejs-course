@@ -10,21 +10,21 @@ export default function Experience() {
   });
 
   const eventHandler = (event) => {
-    console.log("---");
-    console.log("distance", event.distance); // Distance between camera and hit point
-    console.log("point", event.point); // Hit point coordinates (in 3D)
-    console.log("uv", event.uv); // UV coordinates on the geometry (in 2D)
-    console.log("object", event.object); // The object that triggered the event
-    console.log("eventObject", event.eventObject); // The object that was listening to the event (useful where there is objects in objects)
+    // console.log("---");
+    // console.log("distance", event.distance); // Distance between camera and hit point
+    // console.log("point", event.point); // Hit point coordinates (in 3D)
+    // console.log("uv", event.uv); // UV coordinates on the geometry (in 2D)
+    // console.log("object", event.object); // The object that triggered the event
+    // console.log("eventObject", event.eventObject); // The object that was listening to the event (useful where there is objects in objects)
 
-    console.log("---");
-    console.log("x", event.x); // 2D screen coordinates of the pointer
-    console.log("y", event.y); // 2D screen coordinates of the pointer
+    // console.log("---");
+    // console.log("x", event.x); // 2D screen coordinates of the pointer
+    // console.log("y", event.y); // 2D screen coordinates of the pointer
 
-    console.log("---");
-    console.log("shiftKey", event.shiftKey); // If the SHIFT key was pressed
-    console.log("ctrlKey", event.ctrlKey); // If the CTRL key was pressed
-    console.log("metaKey", event.metaKey); // If the COMMAND key was pressed
+    // console.log("---");
+    // console.log("shiftKey", event.shiftKey); // If the SHIFT key was pressed
+    // console.log("ctrlKey", event.ctrlKey); // If the CTRL key was pressed
+    // console.log("metaKey", event.metaKey); // If the COMMAND key was pressed
     cube.current.material.color.set(`hsl(${Math.random() * 360}, 100%, 50%)`);
   };
 
@@ -45,7 +45,15 @@ export default function Experience() {
         position-x={2}
         scale={1.5}
         //   onClick={eventHandler}
-        onContextMenu={eventHandler} // right click event
+        // onContextMenu={eventHandler} // right click event
+        // onDoubleClick={eventHandler}
+        // onPointerUp={eventHandler} // when the pointer is released
+        // onPointerDown={eventHandler} // when the pointer is pressed
+        // onPointerOver={eventHandler} // when the pointer is over. event triggers by enttering the parent and each childer
+        // onPointerEnter={eventHandler} // when the pointer enters. event triggers by only entering the parent.
+        // onPointerLeave={eventHandler} // when the pointer leaves. event triggers by only leaving the parent.
+        // onPointerMove={eventHandler} // when the pointer moves.
+        onPointerMissed={eventHandler} // when click outside of the object
       >
         <boxGeometry />
         <meshStandardMaterial color="mediumpurple" />
