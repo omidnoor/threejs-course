@@ -104,6 +104,10 @@ window.addEventListener("resize", () => {
   // Update renderer
   renderer.setSize(sizes.width, sizes.height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  // Update effect composer
+  effectComposer.setSize(sizes.width, sizes.height);
+  effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
 /**
@@ -142,25 +146,35 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 /**
  * Postprocessing
  */
-const effectComposer = new EffectComposer(renderer);
+// Render Target
+const renderTarget = new THREE.WebGLRenderTarget(800, 600, {
+  samples: renderer.getPixelRatio() > 1 ? 0 : 4,
+});
+
+const effectComposer = new EffectComposer(renderer, renderTarget);
 effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 effectComposer.setSize(sizes.width, sizes.height);
 
 const renderPass = new RenderPass(scene, camera);
 effectComposer.addPass(renderPass);
 
+// Dot screen pass
 const dotScreenPass = new DotScreenPass();
 dotScreenPass.enabled = false;
 effectComposer.addPass(dotScreenPass);
 
+// Glitch pass
 const glitchPass = new GlitchPass();
 glitchPass.goWild = false;
 glitchPass.enabled = false;
 effectComposer.addPass(glitchPass);
 
+//RGB shift pass
 const rgbShiftPass = new ShaderPass(RGBShiftShader);
+rgbShiftPass.enabled = false;
 effectComposer.addPass(rgbShiftPass);
 
+// Gamma correction pass
 const gammaCorrectionShader = new ShaderPass(GammaCorrectionShader);
 effectComposer.addPass(gammaCorrectionShader);
 
