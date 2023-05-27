@@ -149,7 +149,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
  */
 // Render Target
 const renderTarget = new THREE.WebGLRenderTarget(800, 600, {
-  //   samples: renderer.getPixelRatio() > 1 ? 0 : 4,
+  samples: renderer.getPixelRatio() > 1 ? 0 : 4,
 });
 
 const effectComposer = new EffectComposer(renderer, renderTarget);
@@ -180,9 +180,10 @@ const gammaCorrectionShader = new ShaderPass(GammaCorrectionShader);
 effectComposer.addPass(gammaCorrectionShader);
 
 // SMAA pass
-const smaaPass = new SMAAPass();
-smaaPass.enabled = true;
-effectComposer.addPass(smaaPass);
+if (renderer.getPixelRatio === 1 && renderer.capabilities.isWebGL2) {
+  const smaaPass = new SMAAPass();
+  effectComposer.addPass(smaaPass);
+}
 
 /**
  * Animate
