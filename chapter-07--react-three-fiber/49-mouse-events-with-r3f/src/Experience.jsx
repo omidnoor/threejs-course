@@ -77,7 +77,17 @@ export default function Experience() {
         <meshStandardMaterial color="greenyellow" />
       </mesh>
 
-      <primitive object={hamburger.scene} scale={0.25} position-y={0.5} />
+      <primitive
+        object={hamburger.scene}
+        scale={0.25}
+        position-y={0.5}
+        onClick={(event) => {
+          console.log(event.object.name);
+          event.stopPropagation(); // occluding
+        }}
+      />
+
+      <group></group>
     </>
   );
 }
