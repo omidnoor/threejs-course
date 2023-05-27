@@ -10,6 +10,7 @@ import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { RGBShiftShader } from "three/examples/jsm/shaders/RGBShiftShader.js";
 import { GammaCorrectionShader } from "three/examples/jsm/shaders/GammaCorrectionShader.js";
 import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
 
 /**
  * Base
@@ -174,6 +175,19 @@ effectComposer.addPass(glitchPass);
 const rgbShiftPass = new ShaderPass(RGBShiftShader);
 rgbShiftPass.enabled = false;
 effectComposer.addPass(rgbShiftPass);
+
+// Uneral bloom pass
+const unrealBloomPass = new UnrealBloomPass();
+unrealBloomPass.enabled = true;
+unrealBloomPass.strength = 0.3;
+unrealBloomPass.radius = 1;
+unrealBloomPass.threshold = 0.6;
+effectComposer.addPass(unrealBloomPass);
+
+gui.add(unrealBloomPass, "enabled");
+gui.add(unrealBloomPass, "strength", 0, 1);
+gui.add(unrealBloomPass, "radius", 0, 2);
+gui.add(unrealBloomPass, "threshold", 0, 1);
 
 // Gamma correction pass
 const gammaCorrectionShader = new ShaderPass(GammaCorrectionShader);
