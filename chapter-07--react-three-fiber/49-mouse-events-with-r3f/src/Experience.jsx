@@ -1,5 +1,5 @@
 import { useFrame } from "@react-three/fiber";
-import { OrbitControls, useGLTF } from "@react-three/drei";
+import { OrbitControls, meshBounds, useGLTF } from "@react-three/drei";
 import { useRef } from "react";
 
 export default function Experience() {
@@ -51,7 +51,7 @@ export default function Experience() {
         ref={cube}
         position-x={2}
         scale={1.5}
-        // onClick={eventHandler}
+        onClick={eventHandler}
         // onContextMenu={eventHandler} // right click event
         // onDoubleClick={eventHandler}
         // onPointerUp={eventHandler} // when the pointer is released
@@ -67,6 +67,7 @@ export default function Experience() {
         // onPointerLeave={() => {
         //   document.body.style.cursor = "default";
         // }}
+        raycast={meshBounds} // create a sphere around the object for event handling. better for performances
       >
         <boxGeometry />
         <meshStandardMaterial color="mediumpurple" />
