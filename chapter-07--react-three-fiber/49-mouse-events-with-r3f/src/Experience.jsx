@@ -1,5 +1,5 @@
 import { useFrame } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, useGLTF } from "@react-three/drei";
 import { useRef } from "react";
 
 export default function Experience() {
@@ -8,6 +8,8 @@ export default function Experience() {
   useFrame((state, delta) => {
     cube.current.rotation.y += delta * 0.2;
   });
+
+  const hamburger = useGLTF("./hamburger.glb");
 
   const eventHandler = (event) => {
     // console.log("---");
@@ -59,12 +61,12 @@ export default function Experience() {
         // onPointerLeave={eventHandler} // when the pointer leaves. event triggers by only leaving the parent.
         // onPointerMove={eventHandler} // when the pointer moves.
         // onPointerMissed={eventHandler} // when click outside of the object
-        onPointerEnter={() => {
-          document.body.style.cursor = "pointer";
-        }}
-        onPointerLeave={() => {
-          document.body.style.cursor = "default";
-        }}
+        // onPointerEnter={() => {
+        //   document.body.style.cursor = "pointer";
+        // }}
+        // onPointerLeave={() => {
+        //   document.body.style.cursor = "default";
+        // }}
       >
         <boxGeometry />
         <meshStandardMaterial color="mediumpurple" />
@@ -74,6 +76,8 @@ export default function Experience() {
         <planeGeometry />
         <meshStandardMaterial color="greenyellow" />
       </mesh>
+
+      <primitive object={hamburger.scene} scale={0.25} position-y={0.5} />
     </>
   );
 }
