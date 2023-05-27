@@ -35,7 +35,12 @@ export default function Experience() {
       <directionalLight position={[1, 2, 3]} intensity={1.5} />
       <ambientLight intensity={0.5} />
 
-      <mesh position-x={-2}>
+      <mesh
+        position-x={-2}
+        onClick={(event) => {
+          event.stopPropagation();
+        }}
+      >
         <sphereGeometry />
         <meshStandardMaterial color="orange" />
       </mesh>
@@ -44,7 +49,7 @@ export default function Experience() {
         ref={cube}
         position-x={2}
         scale={1.5}
-        //   onClick={eventHandler}
+        // onClick={eventHandler}
         // onContextMenu={eventHandler} // right click event
         // onDoubleClick={eventHandler}
         // onPointerUp={eventHandler} // when the pointer is released
@@ -53,7 +58,7 @@ export default function Experience() {
         // onPointerEnter={eventHandler} // when the pointer enters. event triggers by only entering the parent.
         // onPointerLeave={eventHandler} // when the pointer leaves. event triggers by only leaving the parent.
         // onPointerMove={eventHandler} // when the pointer moves.
-        onPointerMissed={eventHandler} // when click outside of the object
+        // onPointerMissed={eventHandler} // when click outside of the object
       >
         <boxGeometry />
         <meshStandardMaterial color="mediumpurple" />
