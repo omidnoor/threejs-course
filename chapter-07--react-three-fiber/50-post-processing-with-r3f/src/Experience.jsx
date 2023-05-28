@@ -5,6 +5,7 @@ import {
   EffectComposer,
   Glitch,
   Vignette,
+  Noise,
 } from "@react-three/postprocessing";
 import { BlendFunction, GlitchMode } from "postprocessing";
 
@@ -26,6 +27,7 @@ export default function Experience() {
           strength={[0.05, 0.1]}
           mode={GlitchMode.SPORADIC}
         /> */}
+        <Noise blendFunction={BlendFunction.SOFT_LIGHT} premultiply />
       </EffectComposer>
 
       <Perf position="top-left" />
