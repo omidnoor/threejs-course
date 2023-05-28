@@ -8,9 +8,10 @@ console.log(BlendFunction);
 export default function Experience() {
   return (
     <>
+      <color args={["#ffffff"]} attach="background" />
       <EffectComposer>
         <Vignette
-          offset={0.2}
+          offset={0.5}
           darkness={0.8}
           blendFunction={BlendFunction.NORMAL}
         />
