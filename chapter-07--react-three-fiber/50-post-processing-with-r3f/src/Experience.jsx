@@ -12,6 +12,7 @@ import {
 import { BlendFunction, GlitchMode } from "postprocessing";
 import { MeshStandardMaterial } from "three";
 import { useControls } from "leva";
+import Drunk from "./Drunk";
 
 export default function Experience() {
   // const ssrProps = useControls("SSR Effect", {
@@ -44,6 +45,7 @@ export default function Experience() {
   //   thickness: { value: 10, min: 0, max: 10 },
   //   ior: { value: 1.45, min: 0, max: 2 },
   // });
+
   return (
     <>
       <color args={["#ffffff"]} attach="background" />
@@ -67,6 +69,7 @@ export default function Experience() {
           bokehScale={6}
         /> */}
         {/* <SSR {...ssrProps} /> */}
+        <Drunk />
       </EffectComposer>
 
       <Perf position="top-left" />
