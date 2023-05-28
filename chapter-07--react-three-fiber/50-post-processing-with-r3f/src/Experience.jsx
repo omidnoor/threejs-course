@@ -13,8 +13,11 @@ import { BlendFunction, GlitchMode } from "postprocessing";
 import { MeshStandardMaterial } from "three";
 import { useControls } from "leva";
 import Drunk from "./Drunk";
+import { useRef } from "react";
 
 export default function Experience() {
+  const drunkRef = useRef(null);
+
   // const ssrProps = useControls("SSR Effect", {
   //   temporalResolve: true,
   //   STRETCH_MISSED_RAYS: true,
@@ -46,6 +49,11 @@ export default function Experience() {
   //   ior: { value: 1.45, min: 0, max: 2 },
   // });
 
+  const drunkProps = useControls("Drunk Effect", {
+    frequency: { value: 2, min: 1, max: 20 },
+    amplitude: { value: 0.1, min: 0, max: 1 },
+  });
+
   return (
     <>
       <color args={["#ffffff"]} attach="background" />
@@ -69,7 +77,11 @@ export default function Experience() {
           bokehScale={6}
         /> */}
         {/* <SSR {...ssrProps} /> */}
-        <Drunk />
+        <Drunk
+          ref={drunkRef}
+          {...drunkProps}
+          blendFunction={BlendFunction.DARKEN}
+        />
       </EffectComposer>
 
       <Perf position="top-left" />
