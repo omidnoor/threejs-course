@@ -6,13 +6,15 @@ import {
   Glitch,
   Vignette,
   Noise,
+  DepthOfField,
 } from "@react-three/postprocessing";
 import { BlendFunction, GlitchMode } from "postprocessing";
+import { MeshStandardMaterial } from "three";
 
 export default function Experience() {
   return (
     <>
-      <color args={["#000000"]} attach="background" />
+      <color args={["#ffffff"]} attach="background" />
       <EffectComposer>
         {/* <Vignette
           offset={0.5}
@@ -26,7 +28,12 @@ export default function Experience() {
           mode={GlitchMode.SPORADIC}
         /> */}
         {/* <Noise blendFunction={BlendFunction.SOFT_LIGHT} premultiply /> */}
-        <Bloom mipmapBlur intensity={1} luminanceThreshold={1} />
+        {/* <Bloom mipmapBlur intensity={1} luminanceThreshold={1} /> */}
+        <DepthOfField
+          focusDistance={0.025}
+          focalLength={0.025}
+          bokehScale={6}
+        />
       </EffectComposer>
 
       <Perf position="top-left" />
@@ -36,7 +43,7 @@ export default function Experience() {
       <directionalLight castShadow position={[1, 2, 3]} intensity={1.5} />
       <ambientLight intensity={0.5} />
 
-      <mesh castShadow position-x={-2}>
+      {/* <mesh castShadow position-x={-2}>
         <sphereGeometry />
         <meshStandardMaterial color={[1.5, 4, 2]} toneMapped={false} />
       </mesh>
@@ -44,6 +51,15 @@ export default function Experience() {
       <mesh castShadow position-x={2} scale={1.5}>
         <boxGeometry />
         <meshBasicMaterial color={[1.5, 1, 4]} toneMapped={false} />
+      </mesh> */}
+      <mesh castShadow position-x={-2}>
+        <sphereGeometry />
+        <meshStandardMaterial color="salmon" />
+      </mesh>
+
+      <mesh castShadow position-x={2} scale={1.5}>
+        <boxGeometry />
+        <meshStandardMaterial color="mediumblue" />
       </mesh>
 
       <mesh
