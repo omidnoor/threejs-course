@@ -31,11 +31,11 @@ export default function Experience() {
   };
 
   const sphereJump = () => {
-    sphere.current.applyImpulse({ x: 0, y: 5, z: 0 });
+    sphere.current.applyImpulse({ x: 0, y: 30, z: 0 });
     sphere.current.applyTorqueImpulse({
-      x: Math.random() - 0.5,
-      y: Math.random() - 0.5,
-      z: Math.random() - 0.5,
+      x: (Math.random() - 0.5) * 10,
+      y: (Math.random() - 0.5) * 10,
+      z: (Math.random() - 0.5) * 10,
     });
   };
 
@@ -62,7 +62,7 @@ export default function Experience() {
           </mesh>
         </RigidBody>
 
-        <RigidBody ref={cube}>
+        <RigidBody ref={cube} friction={0}>
           <mesh castShadow position={[1.5, 2, 0]} scale={1} onClick={cubeJump}>
             <boxGeometry />
             <meshStandardMaterial color="mediumpurple" />
@@ -103,7 +103,13 @@ export default function Experience() {
           </mesh>
         </RigidBody> */}
 
-        <RigidBody type="fixed" restitution={1}>
+        {/* <RigidBody type="fixed" restitution={1}>
+          <mesh receiveShadow position-y={-1.25}>
+            <boxGeometry args={[10, 0.5, 10]} />
+            <meshStandardMaterial color="greenyellow" />
+          </mesh>
+        </RigidBody> */}
+        <RigidBody type="fixed" friction={0}>
           <mesh receiveShadow position-y={-1.25}>
             <boxGeometry args={[10, 0.5, 10]} />
             <meshStandardMaterial color="greenyellow" />
