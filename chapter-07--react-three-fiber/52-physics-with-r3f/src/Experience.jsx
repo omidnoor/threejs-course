@@ -17,11 +17,15 @@ import {
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { useState } from "react";
 
 export default function Experience() {
   const cube = useRef();
   const sphere = useRef();
   const twister = useRef();
+  const [hitSound, setHitSound] = useState(() => {
+    return new Audio("./hit.mp3");
+  });
 
   const cubeJump = () => {
     console.log(cube.current.applyImpulse);
@@ -58,6 +62,10 @@ export default function Experience() {
     twister.current.setNextKinematicTranslation({ x: x, y: -0.8, z: z });
   });
 
+  const collisionEnter = () => {
+    console.log("enter");
+  };
+
   return (
     <>
       <Perf position="top-left" />
@@ -83,10 +91,11 @@ export default function Experience() {
 
         <RigidBody
           ref={cube}
-          friction={0}
+          friction={0.7}
           colliders={false}
           position={[1.5, 2, 0]}
           scale={1}
+          onCollisionEnter={collisionEnter}
         >
           <mesh castShadow onClick={cubeJump}>
             <boxGeometry />
@@ -135,7 +144,7 @@ export default function Experience() {
             <meshStandardMaterial color="greenyellow" />
           </mesh>
         </RigidBody> */}
-        <RigidBody type="fixed" friction={0}>
+        <RigidBody type="fixed" friction={0.7}>
           <mesh receiveShadow position-y={-1.25}>
             <boxGeometry args={[10, 0.5, 10]} />
             <meshStandardMaterial color="greenyellow" />
@@ -144,7 +153,7 @@ export default function Experience() {
 
         <RigidBody
           position={[0, -0.8, 0]}
-          friction={0}
+          friction={0.7}
           type="kinematicPosition"
           ref={twister}
         >
