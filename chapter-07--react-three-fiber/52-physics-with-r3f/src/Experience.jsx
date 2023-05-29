@@ -13,12 +13,14 @@ import {
   ConvexHullCollider,
   TrimeshCollider,
   HeightfieldCollider,
+  InstancedRigidBodies,
 } from "@react-three/rapier";
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useMemo } from "react";
 
 export default function Experience() {
   const cube = useRef();
@@ -75,17 +77,31 @@ export default function Experience() {
 
   const cubes = useRef();
 
-  useEffect(() => {
+  const cubeTransforms = useMemo(() => {
+    const positions = [];
+    const rotations = [];
+    const scales = [];
+
     for (let i = 0; i < cubesCount; i++) {
-      const matrix = new THREE.Matrix4();
-      matrix.compose(
-        new THREE.Vector3(i * 2, 0, 0),
-        new THREE.Quaternion(),
-        new THREE.Vector3(1, 1, 1),
-      );
-      cubes.current.setMatrixAt(i, matrix);
+      positions.push([i * 2, 0, 0]);
+      rotations.push([0, 0, 0]);
+      scales.push([1, 1, 1]);
     }
+
+    return { positions, rotations, scales };
   }, []);
+
+  //   useEffect(() => {
+  //     for (let i = 0; i < cubesCount; i++) {
+  //       const matrix = new THREE.Matrix4();
+  //       matrix.compose(
+  //         new THREE.Vector3(i * 2, 0, 0),
+  //         new THREE.Quaternion(),
+  //         new THREE.Vector3(1, 1, 1),
+  //       );
+  //       cubes.current.setMatrixAt(i, matrix);
+  //     }
+  //   }, []);
 
   return (
     <>
@@ -204,11 +220,16 @@ export default function Experience() {
           <CuboidCollider args={[0.25, 1.5, 5]} position={[-5.25, 0, 0]} />
           <CuboidCollider args={[0.25, 1.5, 5]} position={[5.25, 0, 0]} />
         </RigidBody>
-
-        <instancedMesh castShadow ref={cubes} args={[null, null, cubesCount]}>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color="salmon" />
-        </instancedMesh>
+        <InstancedRigidBodies
+          positions={cubeTransforms.positions}
+          rotations={cubeTransforms.rotations}
+          scales={cubeTransforms.scales}
+        >
+          <instancedMesh castShadow ref={cubes} args={[null, null, cubesCount]}>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial color="salmon" />
+          </instancedMesh>
+        </InstancedRigidBodies>
       </Physics>
     </>
   );
