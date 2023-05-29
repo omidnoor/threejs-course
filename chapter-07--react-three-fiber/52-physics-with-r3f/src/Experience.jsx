@@ -1,4 +1,4 @@
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import {
   Physics,
@@ -67,6 +67,8 @@ export default function Experience() {
     // hitSound.volume = Math.random() * 0.2 + 0.8;
     // hitSound.play();
   };
+
+  const hamburger = useGLTF("./hamburger.glb");
 
   return (
     <>
@@ -172,6 +174,10 @@ export default function Experience() {
             <boxGeometry />
             <meshStandardMaterial color="red" />
           </mesh>
+        </RigidBody>
+
+        <RigidBody position={[0, 4, 0]}>
+          <primitive object={hamburger.scene} scale={0.25} />
         </RigidBody>
       </Physics>
     </>
