@@ -63,7 +63,9 @@ export default function Experience() {
   });
 
   const collisionEnter = () => {
-    console.log("enter");
+    hitSound.currentTime = 0;
+    hitSound.volume = Math.random() * 0.2 + 0.8;
+    hitSound.play();
   };
 
   return (
