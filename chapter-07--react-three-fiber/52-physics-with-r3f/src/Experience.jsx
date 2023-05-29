@@ -15,10 +15,13 @@ import {
   HeightfieldCollider,
 } from "@react-three/rapier";
 import { useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 
 export default function Experience() {
   const cube = useRef();
   const sphere = useRef();
+  const twister = useRef();
 
   const cubeJump = () => {
     console.log(cube.current.applyImpulse);
@@ -39,6 +42,21 @@ export default function Experience() {
       z: (Math.random() - 0.5) * 10,
     });
   };
+
+  useFrame((state) => {
+    // console.log(state.clock.getElapsedTime());
+    const time = state.clock.getElapsedTime();
+
+    const angle = time * 0.5;
+    const x = Math.cos(angle) * 2;
+    const z = Math.sin(angle) * 2;
+
+    const eulerRotation = new THREE.Euler(0, time * 3, 0);
+    const quaternionRotation = new THREE.Quaternion();
+    quaternionRotation.setFromEuler(eulerRotation);
+    twister.current.setNextKinematicRotation(quaternionRotation);
+    twister.current.setNextKinematicTranslation({ x: x, y: -0.8, z: z });
+  });
 
   return (
     <>
@@ -121,6 +139,18 @@ export default function Experience() {
           <mesh receiveShadow position-y={-1.25}>
             <boxGeometry args={[10, 0.5, 10]} />
             <meshStandardMaterial color="greenyellow" />
+          </mesh>
+        </RigidBody>
+
+        <RigidBody
+          position={[0, -0.8, 0]}
+          friction={0}
+          type="kinematicPosition"
+          ref={twister}
+        >
+          <mesh castShadow scale={[0.4, 0.4, 3]}>
+            <boxGeometry />
+            <meshStandardMaterial color="red" />
           </mesh>
         </RigidBody>
       </Physics>
