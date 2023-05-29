@@ -63,9 +63,9 @@ export default function Experience() {
   });
 
   const collisionEnter = () => {
-    hitSound.currentTime = 0;
-    hitSound.volume = Math.random() * 0.2 + 0.8;
-    hitSound.play();
+    // hitSound.currentTime = 0;
+    // hitSound.volume = Math.random() * 0.2 + 0.8;
+    // hitSound.play();
   };
 
   return (
@@ -98,6 +98,15 @@ export default function Experience() {
           position={[1.5, 2, 0]}
           scale={1}
           onCollisionEnter={collisionEnter}
+          //   onCollisionExit={() => {
+          //     console.log("exit");
+          //   }}
+          //   onSleep={() => {
+          //     console.log("sleep");
+          //   }}
+          //   onWake={() => {
+          //     console.log("wake");
+          //   }}
         >
           <mesh castShadow onClick={cubeJump}>
             <boxGeometry />
