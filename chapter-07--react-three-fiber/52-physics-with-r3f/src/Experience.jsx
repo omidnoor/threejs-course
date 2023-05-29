@@ -22,7 +22,8 @@ export default function Experience() {
 
   const cubeJump = () => {
     console.log(cube.current.applyImpulse);
-    cube.current.applyImpulse({ x: 0, y: 5, z: 0 });
+    const cubeMass = cube.current.mass();
+    cube.current.applyImpulse({ x: 0, y: cubeMass * 5, z: 0 });
     cube.current.applyTorqueImpulse({
       x: Math.random() - 0.5,
       y: Math.random() - 0.5,
@@ -62,11 +63,18 @@ export default function Experience() {
           </mesh>
         </RigidBody>
 
-        <RigidBody ref={cube} friction={0}>
-          <mesh castShadow position={[1.5, 2, 0]} scale={1} onClick={cubeJump}>
+        <RigidBody
+          ref={cube}
+          friction={0}
+          colliders={false}
+          position={[1.5, 2, 0]}
+          scale={1}
+        >
+          <mesh castShadow onClick={cubeJump}>
             <boxGeometry />
             <meshStandardMaterial color="mediumpurple" />
           </mesh>
+          <CuboidCollider args={[0.5, 0.5, 0.5]} mass={0.4} />
         </RigidBody>
 
         {/* <RigidBody colliders="hull">
