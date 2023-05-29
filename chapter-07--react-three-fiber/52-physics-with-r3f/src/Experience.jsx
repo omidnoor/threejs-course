@@ -180,6 +180,13 @@ export default function Experience() {
           <primitive object={hamburger.scene} scale={0.25} />
           <CylinderCollider args={[0.5, 1.25]} />
         </RigidBody>
+
+        <RigidBody type="fixed">
+          <CuboidCollider args={[5, 1.5, 0.25]} position={[0, 0, -5.25]} />
+          <CuboidCollider args={[5, 1.5, 0.25]} position={[0, 0, 5.25]} />
+          <CuboidCollider args={[0.25, 1.5, 5]} position={[-5.25, 0, 0]} />
+          <CuboidCollider args={[0.25, 1.5, 5]} position={[5.25, 0, 0]} />
+        </RigidBody>
       </Physics>
     </>
   );
