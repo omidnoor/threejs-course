@@ -1,12 +1,15 @@
 import * as THREE from "three";
 import { RigidBody } from "@react-three/rapier";
+import { useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import { useState } from "react";
 
 THREE.ColorManagement.legacyMode = false;
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
 
 const floor1Material = new THREE.MeshStandardMaterial({ color: "limegreen" });
 const floor2Material = new THREE.MeshStandardMaterial({ color: "greenyellow" });
-const obsticleMaterial = new THREE.MeshStandardMaterial({ color: "orangered" });
+const obstacleMaterial = new THREE.MeshStandardMaterial({ color: "orangered" });
 const wallMaterial = new THREE.MeshStandardMaterial({ color: "slategrey" });
 
 function BlockStart({ position = [0, 0, 0] }) {
@@ -24,7 +27,19 @@ function BlockStart({ position = [0, 0, 0] }) {
     </>
   );
 }
-function BlockSpiner({ position = [0, 0, 0] }) {
+function BlockSpinner({ position = [0, 0, 0] }) {
+  const obstacle = useRef(null);
+  const [speed, setSpeed] = useState(() => {
+    return Math.random() * 0.6 + 0.4;
+  });
+
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    const rotation = new THREE.Quaternion();
+    rotation.setFromEuler(new THREE.Euler(0, time * speed, 0));
+    obstacle.current.setNextKinematicRotation(rotation);
+  });
+
   return (
     <>
       <group position={position}>
@@ -36,11 +51,16 @@ function BlockSpiner({ position = [0, 0, 0] }) {
           castShadow
           receiveShadow
         />
-        <RigidBody type="kinematicPosition" restitution={0.2} friction={0}>
+        <RigidBody
+          type="kinematicPosition"
+          restitution={0.2}
+          friction={0}
+          ref={obstacle}
+        >
           <mesh
             geometry={boxGeometry}
-            material={obsticleMaterial}
-            scale={[3.5, 0.3, 0.3]}
+            material={obstacleMaterial}
+            scale={[3.5, 0.4, 0.3]}
             castShadow
             receiveShadow
           />
@@ -54,7 +74,7 @@ const Level = () => {
   return (
     <>
       <BlockStart position={[0, 0, 4]} />
-      <BlockSpiner position={[0, 0, 0]} />
+      <BlockSpinner position={[0, 0, 0]} />
     </>
   );
 };
