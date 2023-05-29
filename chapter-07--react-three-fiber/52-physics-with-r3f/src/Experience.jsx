@@ -18,6 +18,7 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useState } from "react";
+import { useEffect } from "react";
 
 export default function Experience() {
   const cube = useRef();
@@ -69,6 +70,22 @@ export default function Experience() {
   };
 
   const hamburger = useGLTF("./hamburger.glb");
+
+  const cubesCount = 3;
+
+  const cubes = useRef();
+
+  useEffect(() => {
+    for (let i = 0; i < cubesCount; i++) {
+      const matrix = new THREE.Matrix4();
+      matrix.compose(
+        new THREE.Vector3(i * 2, 0, 0),
+        new THREE.Quaternion(),
+        new THREE.Vector3(1, 1, 1),
+      );
+      cubes.current.setMatrixAt(i, matrix);
+    }
+  }, []);
 
   return (
     <>
@@ -187,6 +204,11 @@ export default function Experience() {
           <CuboidCollider args={[0.25, 1.5, 5]} position={[-5.25, 0, 0]} />
           <CuboidCollider args={[0.25, 1.5, 5]} position={[5.25, 0, 0]} />
         </RigidBody>
+
+        <instancedMesh castShadow ref={cubes} args={[null, null, cubesCount]}>
+          <boxGeometry args={[1, 1, 1]} />
+          <meshStandardMaterial color="salmon" />
+        </instancedMesh>
       </Physics>
     </>
   );
