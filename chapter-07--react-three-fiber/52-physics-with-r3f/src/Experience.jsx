@@ -48,9 +48,14 @@ export default function Experience() {
       <directionalLight castShadow position={[1, 2, 3]} intensity={1.5} />
       <ambientLight intensity={0.5} />
 
-      <Physics gravity={[0, -3.5, 0]}>
+      <Physics gravity={[0, -9.8, 0]}>
         <Debug />
-        <RigidBody colliders="ball" gravityScale={0.1} ref={sphere}>
+        <RigidBody
+          colliders="ball"
+          gravityScale={1}
+          ref={sphere}
+          restitution={1}
+        >
           <mesh castShadow position={[-1.5, 2, 0]} onClick={sphereJump}>
             <sphereGeometry />
             <meshStandardMaterial color="orange" />
@@ -98,7 +103,7 @@ export default function Experience() {
           </mesh>
         </RigidBody> */}
 
-        <RigidBody type="fixed">
+        <RigidBody type="fixed" restitution={1}>
           <mesh receiveShadow position-y={-1.25}>
             <boxGeometry args={[10, 0.5, 10]} />
             <meshStandardMaterial color="greenyellow" />
