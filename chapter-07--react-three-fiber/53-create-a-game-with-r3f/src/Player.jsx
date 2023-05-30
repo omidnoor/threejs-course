@@ -5,13 +5,14 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 function Player() {
-  const [smoothCameraPosition] = useState(() => new THREE.Vector3());
-  const [smoothCameraTarget] = useState(() => new THREE.Vector3());
-
   const body = useRef();
   const [subscribeKeys, getKeys] = useKeyboardControls();
   const { rapier, world } = useRapier();
   const rapierWorld = world.raw();
+  const [smoothedCameraPosition] = useState(
+    () => new THREE.Vector3(10, 10, 10),
+  );
+  const [smoothedCameraTarget] = useState(() => new THREE.Vector3());
 
   const jump = () => {
     const origin = body.current.translation();
@@ -19,7 +20,10 @@ function Player() {
     const direction = { x: 0, y: -1, z: 0 };
     const ray = new rapier.Ray(origin, direction);
     const hit = rapierWorld.castRay(ray, 10, true);
-    if (hit.toi < 0.15) body.current.applyImpulse({ x: 0, y: 0.5, z: 0 });
+
+    if (hit.toi < 0.15) {
+      body.current.applyImpulse({ x: 0, y: 0.5, z: 0 });
+    }
   };
 
   useEffect(() => {
@@ -38,12 +42,13 @@ function Player() {
     /**
      * Controls
      */
-    const { forward, backward, leftward, rightward, jump } = getKeys();
+    const { forward, backward, leftward, rightward } = getKeys();
+
     const impulse = { x: 0, y: 0, z: 0 };
     const torque = { x: 0, y: 0, z: 0 };
 
-    const impulseStrength = 1 * delta;
-    const torqueStrength = 1 * delta;
+    const impulseStrength = 0.6 * delta;
+    const torqueStrength = 0.2 * delta;
 
     forward && (impulse.z -= impulseStrength);
     forward && (torque.x -= torqueStrength);
@@ -61,19 +66,20 @@ function Player() {
      * Camera
      */
     const bodyPosition = body.current.translation();
+
     const cameraPosition = new THREE.Vector3();
     cameraPosition.copy(bodyPosition);
-    cameraPosition.z += 2.5;
+    cameraPosition.z += 2.25;
     cameraPosition.y += 0.65;
     const cameraTarget = new THREE.Vector3();
     cameraTarget.copy(bodyPosition);
     cameraTarget.y += 0.25;
 
-    smoothCameraTarget.lerp(cameraPosition, 5 * delta);
-    smoothCameraPosition.lerp(cameraPosition, 5 * delta);
-    // console.log(smoothCameraPosition);
-    state.camera.position.copy(smoothCameraPosition);
-    state.camera.lookAt(smoothCameraTarget);
+    smoothedCameraPosition.lerp(cameraPosition, 5 * delta);
+    smoothedCameraTarget.lerp(cameraTarget, 5 * delta);
+
+    state.camera.position.copy(smoothedCameraPosition);
+    state.camera.lookAt(smoothedCameraTarget);
   });
 
   return (
