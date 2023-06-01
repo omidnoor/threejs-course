@@ -7,6 +7,12 @@ const useGame = create(
       blocksCount: 5,
 
       /**
+       * Time
+       */
+      startTime: 0,
+      endTime: 0,
+
+      /**
        * Phases
        */
       phase: "ready",
@@ -15,6 +21,7 @@ const useGame = create(
           if (state.phase === "ready") {
             return {
               phase: "playing",
+              startTime: Date.now(),
             };
           }
           return {};
@@ -35,6 +42,7 @@ const useGame = create(
           if (state.phase === "playing") {
             return {
               phase: "ended",
+              endTime: Date.now(),
             };
           }
           return {};
