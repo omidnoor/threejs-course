@@ -4,6 +4,7 @@ import { Level, BlockLimbo, BlockSpinner } from "./Level.jsx";
 import { Physics, Debug } from "@react-three/rapier";
 import Player from "./Player.jsx";
 import useGame from "./stores/useGame";
+import Effects from "./Effects.jsx";
 
 export default function Experience() {
   const blocksCount = useGame((state) => state.blocksCount);
@@ -17,6 +18,7 @@ export default function Experience() {
         <Lights />
         <Level count={blocksCount} seed={blocksSeed} />
         <Player />
+        <Effects />
       </Physics>
     </>
   );
