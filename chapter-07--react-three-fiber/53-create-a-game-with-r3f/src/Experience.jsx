@@ -12,7 +12,7 @@ export default function Experience() {
   return (
     <>
       {/* <OrbitControls makeDefault /> */}
-      <color attach="background" args={["#bdedfc"]} />
+      <color attach="background" args={["#252731"]} />
       <Physics>
         {/* <Debug /> */}
         <Lights />
