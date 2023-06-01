@@ -5,6 +5,7 @@ const useGame = create(
   subscribeWithSelector((set) => {
     return {
       blocksCount: 5,
+      blocksSeed: 0,
 
       /**
        * Time
@@ -32,6 +33,7 @@ const useGame = create(
           if (state.phase === "playing" || state.phase === "ended") {
             return {
               phase: "ready",
+              blocksSeed: Math.random(),
             };
           }
           return {};

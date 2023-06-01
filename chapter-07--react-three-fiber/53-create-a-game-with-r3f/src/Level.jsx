@@ -235,6 +235,7 @@ function Bounds({ length = 1 }) {
 export const Level = ({
   count = 5,
   types = [BlockSpinner, BlockLimbo, BlockAxe],
+  seed = 0,
 }) => {
   const blocks = useMemo(() => {
     const blocks = [];
@@ -243,7 +244,7 @@ export const Level = ({
       blocks.push(type);
     }
     return blocks;
-  }, [count, types]);
+  }, [count, types, seed]);
   return (
     <>
       <BlockStart position={[0, 0, 0]} />
